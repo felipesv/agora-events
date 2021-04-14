@@ -1,0 +1,30 @@
+@api = http://localhost:5000
+
+
+GET {{api}}/events
+
+###
+GET {{api}}/events/6076510e81b8f9491dcc7272
+
+###
+GET {{api}}/events/6076510e81b8f9491dcc7234
+
+###
+POST {{api}}/events/
+Content-Type: application/json
+
+{
+	"title": "cumpleaños Jorge",
+	"description": "esto es una descripcion"
+}
+
+###
+DELETE {{api}}/events/60764f7681b8f9491dcc7271
+
+###
+PUT {{api}}/events/6076510e81b8f9491dcc7272
+Content-Type: application/json
+
+{
+	"title": "cumpleaños Jorge, Aura y Kael"
+}
