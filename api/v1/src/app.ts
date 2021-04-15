@@ -4,6 +4,7 @@ import cors from 'cors';
 import config from './config/config';
 
 import eventsRoutes from './routes/events.routes';
+import usersRoutes from './routes/users.routes';
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); //REVISAR QUE HACE
 app.use(eventsRoutes);
+app.use(usersRoutes);
 
 export default app;

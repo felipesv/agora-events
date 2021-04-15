@@ -1,0 +1,33 @@
+@api = http://localhost:5000
+
+
+GET {{api}}/users
+
+###
+GET {{api}}/users/6078b8a84078452a18f35f0c
+
+###
+GET {{api}}/users/6076510e81b8f9491dcc7234
+
+###
+POST {{api}}/users/
+Content-Type: application/json
+
+{
+	"username": "jweb",
+	"password": "123",
+	"firstName": "Pepito",
+	"lastName": "Perez",
+	"email": "donpepe@hotmail.com"
+}
+
+###
+DELETE {{api}}/users/6078b8a84078452a18f35f0c
+
+###
+PUT {{api}}/users/6078bb295c3f681624dfd61c
+Content-Type: application/json
+
+{
+	"firstName": "Pepita"
+}
