@@ -4,7 +4,7 @@
 GET {{api}}/events
 
 ###
-GET {{api}}/events/6076510e81b8f9491dcc7272
+GET {{api}}/events/607860e84c58cd03086c46d4
 
 ###
 GET {{api}}/events/6076510e81b8f9491dcc7234
