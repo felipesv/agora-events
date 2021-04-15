@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import config from './config';
+import config from './config/config';
 
 import eventsRoutes from './routes/events.routes';
 
