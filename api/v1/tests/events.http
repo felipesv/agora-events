@@ -14,12 +14,19 @@ POST {{api}}/events/
 Content-Type: application/json
 
 {
-	"title": "cumpleaños Jorge",
-	"description": "esto es una descripcion"
+	"title": "cumpleaños",
+	"description": "esto es una descripcion",
+	"duration": {
+		"length": 1,
+		"format": "days"
+	},
+	"date": "2021-05-08 18:30:00Z",
+	"onSite": false,
+	"venue": "www.micumple.com/live"
 }
 
 ###
-DELETE {{api}}/events/60764f7681b8f9491dcc7271
+DELETE {{api}}/events/6078701cefeeb608f9cba37e
 
 ###
 PUT {{api}}/events/6076510e81b8f9491dcc7272
