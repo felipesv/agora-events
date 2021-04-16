@@ -1,15 +1,15 @@
 @api = http://localhost:5000
 
-
+### Test to get all events
 GET {{api}}/events
 
-###
-GET {{api}}/events/607860e84c58cd03086c46d4
+### Test to get an existing event -> GET {{api}}/events/<valid id>
+GET {{api}}/events/6079b03f6202145d5d38fce5
 
-###
-GET {{api}}/events/6076510e81b8f9491dcc7234
+### Test to get an non-existing event -> GET {{api}}/events/<not valid id>
+GET {{api}}/events/nonexistingevent
 
-###
+### Test to create a valid event
 POST {{api}}/events/
 Content-Type: application/json
 
@@ -25,13 +25,48 @@ Content-Type: application/json
 	"venue": "www.micumple.com/live"
 }
 
-###
-DELETE {{api}}/events/6078701cefeeb608f9cba37e
-
-###
-PUT {{api}}/events/6076510e81b8f9491dcc7272
+### Test to create an invalid event
+POST {{api}}/events/
 Content-Type: application/json
 
 {
-	"title": "cumpleaños Jorge, Aura y Kael"
+	//"title": "cumpleaños",
+	"description": "esto es una descripcion",
+	"duration": {
+		"length": 1,
+		"format": "days"
+	},
+	"date": "2021-05-08 18:30:00Z",
+	"onSite": false,
+	"venue": "www.micumple.com/live"
+}
+
+### Test to delete a valid event -> DELETE {{api}}/events/<valid id>
+DELETE {{api}}/events/6078701cefeeb608f9cba37e
+
+### Test to delete a invalid event -> DELETE {{api}}/events/<invalid id>
+DELETE {{api}}/events/nonexistingevent
+
+### Test to update an event -> PUT {{api}}/events/<valid id>
+PUT {{api}}/events/6079b03f6202145d5d38fce5
+Content-Type: application/json
+
+{
+	"title": "cumpleaños Jorge, Aura y Kael",
+	"duration": {
+		"length": 2,
+		"format": "days"
+	}
+}
+
+### Test to update a invalid event -> PUT {{api}}/events/<invalid id>
+PUT {{api}}/events/nonexistingevent
+Content-Type: application/json
+
+{
+	"title": "cumpleaños Jorge, Aura y Kael",
+	"duration": {
+		"length": 2,
+		"format": "days"
+	}
 }
