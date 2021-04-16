@@ -7,7 +7,7 @@ export const createUser: RequestHandler = async (req, res) => {
       {
         $or:[
           {email: req.body.email},
-          {user: req.body.username}
+          {username: req.body.username}
         ]
       }
     );
@@ -47,8 +47,32 @@ export const deleteUser: RequestHandler = async (req, res) => {
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
-  // falta validar si el nuevo username o email es unico antes de actualizarse
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!user) return res.status(204).json(); // no sale mensaje para el error 204
-  res.json(user);
+  try {
+    const userFound = await User.findById(req.params.id);
+    if (!userFound) {
+      return res.status(301).json({message: 'invalid user ID'});
+    }
+    const usersFound = await User.find(
+      {
+        $or:[
+          {email: req.body.email},
+          {username: req.body.username}
+        ],
+        $and:[
+          {_id: {$ne: req.params.id}}
+        ]
+      }
+    );
+
+    if (usersFound.length > 0)
+    {
+      return res.status(301).json({message: 'email or username already exists'});
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!user) return res.status(204).json(); // no sale mensaje para el error 204
+    res.json(user);
+  } catch (error) {
+    res.json(error);
+  }
 };
