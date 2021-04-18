@@ -1,6 +1,11 @@
 import { Schema, model } from 'mongoose';
 
 const eventSchema = new Schema({
+  author: {
+    type: Schema.Types.ObjectId, 
+    ref: 'User',
+    required: true
+  },
   title: {
     type: String,
     required: true,
@@ -40,10 +45,22 @@ const eventSchema = new Schema({
   isActive: {
     type: Boolean,
     default: true,
-  }
-  // FALTA EL USUARIO QUE CREA EL EVENTO
-
-  // FALTA AGREGAR ARREGLO USUARIOS QUE VAN A ASISTIR
+  },
+  capacity: {
+    type: Number
+  },
+  rating: {
+    users: [
+      { type: Schema.Types.ObjectId, ref: 'User' }
+    ],
+    value: {
+      type: Number,
+      default: 0
+    }
+  },
+  attendance: [
+    { type: Schema.Types.ObjectId, ref: 'User' }
+  ]
 }, {
   versionKey: false,
   timestamps: true

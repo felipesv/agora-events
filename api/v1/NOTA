@@ -1,2 +1,15 @@
 - Falta manejo de autenticacion de usuario para todas las funciones
+- Crear funciones para agregar/eliminar una asistencia a un evento
+	- Manejo de aforo si es que el evento lo tiene limitado
+	- agregar id del usuario en eneventos (attendance)
+	- agregar id del evento en usuarios (attendedEvents)
+- Crear funciones para calificar/descalificar un evento
+- Validar que el rating y el attendance no sean actualizados por quien creo el evento
+- el Evento solo sea editado por el que lo creo
+- regex para el username
+
+- confirmacion de email (Opcional)
+- Comentarios de los usuarios a los eventos (Opcional)
 - Modelo de notificaciones (opcional)
+- reporte de eventos (Opcional)
+- manejo de usuarios inactivos (Opcional)
