@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
+import config from '../config/config';
 
 const userSchema = new Schema({
   username: {
@@ -29,15 +31,17 @@ const userSchema = new Schema({
     unique: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
   },
-  role: {
-    type: String,
-    required: true,
-    trim: true,
-    enum: ['user', 'admin']
-  },
+  roles: [
+    {
+      type: String,
+      default: 'user',
+      trim: true,
+      enum: ['user', 'admin']
+    }
+  ],
   verify: {
     type: Boolean,
-    required: true,
+    default: false
   },
   attendedEvents: [
     { type: Schema.Types.ObjectId, ref: 'Event' }
@@ -46,5 +50,10 @@ const userSchema = new Schema({
   versionKey: false,
   timestamps: true
 });
+
+export const encryptPassword = async (password: String) => {
+  const salt = await bcrypt.genSalt();
+  return await bcrypt.hash(password, Number(config.SALT_ROUNDS));
+};
 
 export default model('User', userSchema);

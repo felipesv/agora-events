@@ -5,6 +5,7 @@ import config from './config/config';
 
 import eventsRoutes from './routes/events.routes';
 import usersRoutes from './routes/users.routes';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false})); //REVISAR QUE HACE
 app.use(eventsRoutes);
 app.use(usersRoutes);
+app.use(authRoutes);
 
 export default app;

@@ -1,29 +1,7 @@
 import { RequestHandler } from 'express';
+import jwt, { Secret } from 'jsonwebtoken';
 import User from '../models/User';
-
-export const createUser: RequestHandler = async (req, res) => {
-  try {
-    const usersFound = await User.find(
-      {
-        $or:[
-          {email: req.body.email},
-          {username: req.body.username}
-        ]
-      }
-    );
-
-    if (usersFound.length > 0)
-    {
-      return res.status(301).json({message: 'email or username already exists'});
-    }
-    const user = new User(req.body);
-    const savedUser = await user.save();
-    res.json(savedUser);
-  } catch (error) {
-    return res.json(error);
-  }
-  
-};
+import config from '../config/config';
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {

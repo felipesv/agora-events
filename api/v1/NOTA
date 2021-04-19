@@ -7,6 +7,7 @@
 - Validar que el rating y el attendance no sean actualizados por quien creo el evento
 - el Evento solo sea editado por el que lo creo
 - regex para el username
+- borrar token del lado cliente
 
 - confirmacion de email (Opcional)
 - Comentarios de los usuarios a los eventos (Opcional)
