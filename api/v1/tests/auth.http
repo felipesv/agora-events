@@ -5,11 +5,11 @@ POST {{api}}/signup/
 Content-Type: application/json
 
 {
-	"username": "jorge2",
+	"username": "jorge4",
 	"password": "123",
-	"firstName": "Jorge2",
+	"firstName": "Jorge4",
 	"lastName": "Chaux",
-	"email": "jorge2@hotmail.com"
+	"email": "jorge4@hotmail.com"
 }
 
 

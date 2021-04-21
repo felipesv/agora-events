@@ -24,7 +24,7 @@ export const deleteUser: RequestHandler = async (req, res) => {
 
 export const updateUser: RequestHandler = async (req: Request, res: Response) => {
   try {
-    const userFound = await User.findById(req.body.userId);
+    const userFound = await User.findById(req.userId);
     if (!userFound) {
       return res.status(301).json({message: 'invalid user ID'});
     }
@@ -45,8 +45,10 @@ export const updateUser: RequestHandler = async (req: Request, res: Response) =>
     {
       return res.status(301).json({message: 'email or username already exists'});
     }
+    console.log(req.userId);
+    console.log(req.body);
 
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const user = await User.findByIdAndUpdate(req.userId, req.body, { new: true });
     if (!user) return res.status(204).json(); // no sale mensaje para el error 204
     res.json(user);
   } catch (error) {
