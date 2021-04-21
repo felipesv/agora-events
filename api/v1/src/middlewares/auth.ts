@@ -1,8 +1,14 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import jwt, { Secret } from 'jsonwebtoken';
-import User, { encryptPassword } from '../models/User';
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 import config from '../config/config';
+
+export interface IPayload {
+  id: string,
+  iat: number,
+  exp: number,
+}
 
 export const validNewEmailUsername: RequestHandler = async (req, res, next) => {
   const usersFound = await User.find(
@@ -35,21 +41,33 @@ export const validUsernamePassword: RequestHandler = async (req, res, next) => {
   next();
 };
 
-export const validToken: RequestHandler = async (req, res, next) => {
-  let token = req.headers["x-access-token"];
-
+export const validToken: RequestHandler = async (req: Request, res: Response,
+  next: NextFunction) => {
+  let token = req.get('x-auth-token');
+  req.userId
   if (!token) 
     return res.status(403).json({ message: "No token provided" });
 
   try {
-    const decoded: any = jwt.verify(String(token), config.TOKEN_KEY);
-    req.body.userId = decoded.id;
-
-    const user = await User.findById(req.body.userId, { password: 0 });
+    const tokenValue = token.split(' ')[1].trim();
+    const decoded = jwt.verify(tokenValue, config.TOKEN_KEY) as IPayload;
+    req.userId = decoded.id;
+    const user = await User.findById(req.userId, { password: 0 });
     if (!user) return res.status(404).json({ message: "No user found" });
 
     next();
-  } catch (error) {
-    return res.status(401).json({ message: "Unauthorized!" });
-  }
+   } catch (error) {
+     return res.status(401).json({ message: "Unauthorized!" });
+   }
 };
+
+export const isAdmin: RequestHandler = async (req: Request, res: Response,
+  next: NextFunction) => {
+    const userFind = await User.findById(req.userId);
+    if (!userFind) return res.status(404).json({ message: "No user found" });
+
+    if (!userFind.roles.includes('admin')) {
+      return res.status(401).json({ message: "Unauthorized!" });
+    }
+    next();
+}

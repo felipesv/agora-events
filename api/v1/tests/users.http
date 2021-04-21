@@ -2,6 +2,7 @@
 
 
 GET {{api}}/users
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2YyOGI1NWIzNGUyMDk2MGNiYmVlNSIsImlhdCI6MTYxODk0NjIyOSwiZXhwIjoxNjE5MDMyNjI5fQ.Ha69PvU_xBIMC0q3Cz4FFSUizB0dlIb4e_z3i80EAjo
 
 ###
 GET {{api}}/users/6078bb295c3f681624dfd61c
@@ -10,12 +11,19 @@ GET {{api}}/users/6078bb295c3f681624dfd61c
 GET {{api}}/users/6076510e81b8f9491dcc7234
 
 ###
-DELETE {{api}}/users/6079b2bdb8cbea36848f58da
+DELETE {{api}}/users/607f2ed13c116b2e9cf8306c
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2YyOGI1NWIzNGUyMDk2MGNiYmVlNSIsImlhdCI6MTYxODk0NjIyOSwiZXhwIjoxNjE5MDMyNjI5fQ.Ha69PvU_xBIMC0q3Cz4FFSUizB0dlIb4e_z3i80EAjo
 
 ###
 PUT {{api}}/users/6078bb295c3f681624dfd61c
 Content-Type: application/json
 
 {
-	"username": "auritaMasTarde"
+	"username": "pepito2021"
 }
+
+
+###
+GET {{api}}/user/profile
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2VmYjA1YWQ5ZGRhMjk3MGUxNDM3YSIsImlhdCI6MTYxODkzNzgwNywiZXhwIjoxNjE5MDI0MjA3fQ.OlkT4-_dCP4EKQ8n5IJEG2-G1ycd-1vfkMRnnyc5JSk
+

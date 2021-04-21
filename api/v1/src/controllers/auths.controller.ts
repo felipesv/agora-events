@@ -8,6 +8,7 @@ export const signUp: RequestHandler = async (req, res) => {
     const user = new User({
       ...req.body,
       password: await encryptPassword(req.body.password),
+      roles: typeof req.body.roles === undefined || req.body.roles?.length === 0 ? ["user"] : req.body.roles
     });
     const savedUser = await user.save();
     const token_key: Secret = String(config.TOKEN_KEY);

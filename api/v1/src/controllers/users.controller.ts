@@ -1,7 +1,5 @@
-import { RequestHandler } from 'express';
-import jwt, { Secret } from 'jsonwebtoken';
+import { RequestHandler, Request, Response } from 'express';
 import User from '../models/User';
-import config from '../config/config';
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {
@@ -24,9 +22,9 @@ export const deleteUser: RequestHandler = async (req, res) => {
   res.json(user);
 };
 
-export const updateUser: RequestHandler = async (req, res) => {
+export const updateUser: RequestHandler = async (req: Request, res: Response) => {
   try {
-    const userFound = await User.findById(req.params.id);
+    const userFound = await User.findById(req.body.userId);
     if (!userFound) {
       return res.status(301).json({message: 'invalid user ID'});
     }
@@ -37,7 +35,8 @@ export const updateUser: RequestHandler = async (req, res) => {
           {username: req.body.username}
         ],
         $and:[
-          {_id: {$ne: req.params.id}}
+          // exclude his own data
+          {_id: {$ne: req.userId }}
         ]
       }
     );
@@ -54,3 +53,10 @@ export const updateUser: RequestHandler = async (req, res) => {
     res.json(error);
   }
 };
+
+export const getProfile: RequestHandler = async (req, res) => {
+  const user = await User.findById(req.userId, {password: 0});
+  if (!user) return res.status(204).json(); // no sale mensaje para el error 204
+  res.json(user);
+};
+

@@ -8,5 +8,6 @@ export default {
   MONGO_HOST: process.env.MONGO_HOST || process.env.MONGO_HOST_TEST,
   PORT: process.env.PORT || process.env.PORT_TEST,
   TOKEN_KEY: process.env.TOKEN_KEY || process.env.TOKEN_KEY_TEST,
-  SALT_ROUNDS: process.env.SALT_ROUNDS || process.env.SALT_ROUNDS_TEST
+  SALT_ROUNDS: process.env.SALT_ROUNDS || process.env.SALT_ROUNDS_TEST,
+  ROLES: process.env.ROLES || process.env.ROLES_TEST,
 };

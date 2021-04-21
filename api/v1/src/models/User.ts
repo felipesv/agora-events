@@ -1,6 +1,18 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from '../config/config';
+
+export interface IUser extends Document{
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  email: string
+  roles: Array<string>,
+  verify: boolean,
+  attendedEvents: Array<ObjectId> | Array<string>,
+}
+
 
 const userSchema = new Schema({
   username: {
@@ -34,9 +46,10 @@ const userSchema = new Schema({
   roles: [
     {
       type: String,
-      default: 'user',
       trim: true,
-      enum: ['user', 'admin']
+      enum: ['user', 'admin'],
+      require: true,
+      unique: true,
     }
   ],
   verify: {
@@ -56,4 +69,4 @@ export const encryptPassword = async (password: String) => {
   return await bcrypt.hash(password, Number(config.SALT_ROUNDS));
 };
 
-export default model('User', userSchema);
+export default model<IUser>('User', userSchema);
