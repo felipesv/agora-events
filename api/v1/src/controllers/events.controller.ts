@@ -15,8 +15,13 @@ export const createEvent: RequestHandler = async (req, res) => {
 /* FUNCTION TO GET ALL EVENTS */
 export const getEvents: RequestHandler = async (req, res) => {
   try {
-    const events = await Event.find();
-    res.json(events);
+
+    if (req.userId) {
+      const events = await Event.find();
+      return res.json(events);
+    }
+    const events = await Event.find().select('-attendance');
+    return res.json(events);
   } catch(error) {
     res.json(error);
   }

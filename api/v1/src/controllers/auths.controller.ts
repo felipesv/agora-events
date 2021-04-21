@@ -14,7 +14,7 @@ export const signUp: RequestHandler = async (req, res) => {
     const token_key: Secret = String(config.TOKEN_KEY);
     const token = jwt.sign({ id: savedUser._id }, token_key, { expiresIn: '1d'});
 
-    res.json({ token: `Bearer ${token}` });
+    return res.json({ token: `Bearer ${token}` });
   } catch (error) {
     return res.status(400).json(error);
   }

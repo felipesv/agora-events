@@ -44,7 +44,10 @@ export const validUsernamePassword: RequestHandler = async (req, res, next) => {
 export const validToken: RequestHandler = async (req: Request, res: Response,
   next: NextFunction) => {
   let token = req.get('x-auth-token');
-  req.userId
+  
+  if (!token && req.url === "/events") 
+    return next();
+  
   if (!token) 
     return res.status(403).json({ message: "No token provided" });
 
