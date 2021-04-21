@@ -2,6 +2,7 @@
 
 ### Test to get all events
 GET {{api}}/events
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
 
 ### Test to get an existing event -> GET {{api}}/events/<valid id>
 GET {{api}}/events/6079b03f6202145d5d38fce5
@@ -11,9 +12,11 @@ GET {{api}}/events/nonexistingevent
 
 ### Test to create a valid event
 POST {{api}}/events/
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
 Content-Type: application/json
 
 {
+	"author": "6080944e0f44f7152849fe69",
 	"title": "cumpleaños",
 	"description": "esto es una descripcion",
 	"duration": {
@@ -27,22 +30,25 @@ Content-Type: application/json
 
 ### Test to create an invalid event
 POST {{api}}/events/
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
 Content-Type: application/json
 
 {
-	//"title": "cumpleaños",
-	"description": "esto es una descripcion",
+	"author": "60809cf0561f151650b48095",
+	"title": "cena",
+	"description": "esto es una cena",
 	"duration": {
 		"length": 1,
 		"format": "days"
 	},
 	"date": "2021-05-08 18:30:00Z",
 	"onSite": false,
-	"venue": "www.micumple.com/live"
+	"venue": "www.cena.com/live"
 }
 
 ### Test to delete a valid event -> DELETE {{api}}/events/<valid id>
-DELETE {{api}}/events/6078701cefeeb608f9cba37e
+DELETE {{api}}/events/607878bb6325d50da3f296cd
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
 
 ### Test to delete a invalid event -> DELETE {{api}}/events/<invalid id>
 DELETE {{api}}/events/nonexistingevent

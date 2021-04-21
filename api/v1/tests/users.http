@@ -11,8 +11,8 @@ GET {{api}}/users/6078bb295c3f681624dfd61c
 GET {{api}}/users/6076510e81b8f9491dcc7234
 
 ###
-DELETE {{api}}/users/607f2ed13c116b2e9cf8306c
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2YyOGI1NWIzNGUyMDk2MGNiYmVlNSIsImlhdCI6MTYxODk0NjIyOSwiZXhwIjoxNjE5MDMyNjI5fQ.Ha69PvU_xBIMC0q3Cz4FFSUizB0dlIb4e_z3i80EAjo
+DELETE {{api}}/users/608058772761b10636cf1cdf
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA1ODc3Mjc2MWIxMDYzNmNmMWNkZiIsImlhdCI6MTYxOTAzODMyNCwiZXhwIjoxNjE5MTI0NzI0fQ.VXc7dDlQQOqwhvLL_LzA_oxG0MVmKsMVwpUWSfZ37AA
 
 ###
 PUT {{api}}/users

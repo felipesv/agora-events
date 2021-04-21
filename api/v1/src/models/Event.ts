@@ -1,5 +1,9 @@
 import { Schema, model } from 'mongoose';
 
+// An objectId has 2 validation by default:
+// 1) Hexadecimal 2) 24 characters
+// That's why i necessary to use the mongoose-id-validator library
+
 const eventSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId, 

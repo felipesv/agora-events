@@ -5,12 +5,12 @@ POST {{api}}/signup/
 Content-Type: application/json
 
 {
-	"username": "admin",
+	"username": "norman",
 	"password": "123",
-	"firstName": "firstadmin",
-	"lastName": "lastadmin",
-	"email": "admin@hotmail.com",
-	"roles": ["admin"]
+	"firstName": "norman",
+	"lastName": "lopez",
+	"email": "norman@hotmail.com",
+	"roles": ["user"]
 }
 
 
@@ -19,6 +19,6 @@ POST {{api}}/signin/
 Content-Type: application/json
 
 {
-	"username": "auritaMasTarde",
+	"username": "admin",
 	"password": "123"
 }

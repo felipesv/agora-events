@@ -48,8 +48,7 @@ const userSchema = new Schema({
       type: String,
       trim: true,
       enum: ['user', 'admin'],
-      require: true,
-      unique: true,
+      require: true
     }
   ],
   verify: {
