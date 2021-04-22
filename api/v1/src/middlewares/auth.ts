@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import config from '../config/config';
+import { request } from 'http';
 
 export interface IPayload {
   id: string,
@@ -43,21 +44,24 @@ export const validUsernamePassword: RequestHandler = async (req, res, next) => {
 
 export const validToken: RequestHandler = async (req: Request, res: Response,
   next: NextFunction) => {
+
   let token = req.get('x-auth-token');
-  
-  if (!token && req.url === "/events") 
+
+  if (!token) {
+    req.userId = "";
+    req.registered = false;
     return next();
-  
-  if (!token) 
-    return res.status(403).json({ message: "No token provided" });
+  }
+  //   return res.status(403).json({ message: "No token provided" });
 
   try {
     const tokenValue = token.split(' ')[1].trim();
     const decoded = jwt.verify(tokenValue, config.TOKEN_KEY) as IPayload;
     req.userId = decoded.id;
+    console.log("DECODED======", decoded);
     const user = await User.findById(req.userId, { password: 0 });
     if (!user) return res.status(404).json({ message: "No user found" });
-
+    req.registered = true;
     next();
    } catch (error) {
      return res.status(401).json({ message: "Unauthorized!" });
@@ -66,6 +70,9 @@ export const validToken: RequestHandler = async (req: Request, res: Response,
 
 export const isAdmin: RequestHandler = async (req: Request, res: Response,
   next: NextFunction) => {
+    if (!req.registered)
+      return res.status(403).json({ message: "No token provided" });
+
     const userFind = await User.findById(req.userId);
     if (!userFind) return res.status(404).json({ message: "No user found" });
 

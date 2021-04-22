@@ -2,10 +2,11 @@
 
 ### Test to get all events
 GET {{api}}/events
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
 
 ### Test to get an existing event -> GET {{api}}/events/<valid id>
-GET {{api}}/events/6079b03f6202145d5d38fce5
+GET {{api}}/events/60809963561f151650b48094
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
 
 ### Test to get an non-existing event -> GET {{api}}/events/<not valid id>
 GET {{api}}/events/nonexistingevent
@@ -47,18 +48,20 @@ Content-Type: application/json
 }
 
 ### Test to delete a valid event -> DELETE {{api}}/events/<valid id>
-DELETE {{api}}/events/607878bb6325d50da3f296cd
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
+DELETE {{api}}/events/60809d8c561f151650b48097
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
+
 
 ### Test to delete a invalid event -> DELETE {{api}}/events/<invalid id>
 DELETE {{api}}/events/nonexistingevent
 
 ### Test to update an event -> PUT {{api}}/events/<valid id>
-PUT {{api}}/events/6079b03f6202145d5d38fce5
+PUT {{api}}/events/60809963561f151650b48094
 Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
 
 {
-	"title": "cumpleaños Jorge, Aura y Kael",
+	"title": "Cumple editado POR ADMIN!!!",
 	"duration": {
 		"length": 2,
 		"format": "days"
@@ -76,3 +79,12 @@ Content-Type: application/json
 		"format": "days"
 	}
 }
+
+### Attendance Test
+
+POST {{api}}/attendance/6080a5514556ad19c105b336
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjkzMGY0NGY3MTUyODQ5ZmU2OCIsImlhdCI6MTYxOTAzODg2NywiZXhwIjoxNjE5MTI1MjY3fQ.BZX7f1tszathU4YMghuUxTMqRBrgLvU4NxvzodoqKjI
+
+### DELETE ATTENDANCE
+DELETE {{api}}/attendance/6080a5514556ad19c105b336
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTEyNTcyMywiZXhwIjoxNjE5MjEyMTIzfQ.m_8BrXwWy9MRk3iqBTGbqiWXCzJX68waeRCCWQbcd_0

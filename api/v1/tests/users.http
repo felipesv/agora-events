@@ -2,10 +2,11 @@
 
 
 GET {{api}}/users
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2YyOGI1NWIzNGUyMDk2MGNiYmVlNSIsImlhdCI6MTYxODk0NjIyOSwiZXhwIjoxNjE5MDMyNjI5fQ.Ha69PvU_xBIMC0q3Cz4FFSUizB0dlIb4e_z3i80EAjo
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
 
 ###
-GET {{api}}/users/6078bb295c3f681624dfd61c
+GET {{api}}/users/6080944e0f44f7152849fe69
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjkzMGY0NGY3MTUyODQ5ZmU2OCIsImlhdCI6MTYxOTAzODg2NywiZXhwIjoxNjE5MTI1MjY3fQ.BZX7f1tszathU4YMghuUxTMqRBrgLvU4NxvzodoqKjI
 
 ###
 GET {{api}}/users/6076510e81b8f9491dcc7234
@@ -26,5 +27,5 @@ Content-Type: application/json
 
 ###
 GET {{api}}/user/profile
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2VmYjA1YWQ5ZGRhMjk3MGUxNDM3YSIsImlhdCI6MTYxODkzNzgwNywiZXhwIjoxNjE5MDI0MjA3fQ.OlkT4-_dCP4EKQ8n5IJEG2-G1ycd-1vfkMRnnyc5JSk
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjkzMGY0NGY3MTUyODQ5ZmU2OCIsImlhdCI6MTYxOTAzODg2NywiZXhwIjoxNjE5MTI1MjY3fQ.BZX7f1tszathU4YMghuUxTMqRBrgLvU4NxvzodoqKjI
 
