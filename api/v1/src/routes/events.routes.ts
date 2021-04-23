@@ -11,5 +11,7 @@ router.delete('/events/:id', [validToken], eventsCtrl.deleteEvent);
 router.put('/events/:id', [validToken], eventsCtrl.updateEvent);
 router.post('/attendance/:id', [validToken], eventsCtrl.insertAttendance);
 router.delete('/attendance/:id', [validToken], eventsCtrl.deleteAttendance);
+router.post('/rating/:id', [validToken], eventsCtrl.increaseRating);
+router.delete('/rating/:id', [validToken], eventsCtrl.decreaseRating);
 
 export default router;

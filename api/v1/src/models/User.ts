@@ -10,9 +10,8 @@ export interface IUser extends Document{
   email: string
   roles: Array<string>,
   verify: boolean,
-  attendedEvents: Array<ObjectId> | Array<string>,
+  eventsToAssist: Array<string>,
 }
-
 
 const userSchema = new Schema({
   username: {
@@ -55,7 +54,7 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  attendedEvents: [
+  eventsToAssist: [
     { type: Schema.Types.ObjectId, ref: 'Event' }
   ]
 }, {

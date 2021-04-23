@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request } from 'express';
 import Event from '../models/Event';
 import User from '../models/User';
 import { isAuthor, hasCapacity } from '../helpers/helpers';
@@ -95,7 +95,7 @@ export const deleteEvent: RequestHandler = async (req, res) => {
 };
 
 /* FUNCTION TO UPDATE AN EVENT BY ID */
-export const updateEvent: RequestHandler = async (req, res) => {
+export const updateEvent: RequestHandler = async (req: Request, res) => {
   try {
     if (!req.registered)
       return res.status(403).json({ message: "No token provided" });
@@ -106,7 +106,6 @@ export const updateEvent: RequestHandler = async (req, res) => {
 
     if (user.roles.includes('admin') || await isAuthor(req.params.id, req.userId)) {
       const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
       if (!event) return res.status(404).json({ message: "User not found" });
       return res.json(event);
     }
@@ -161,5 +160,57 @@ export const deleteAttendance: RequestHandler = async (req, res) => {
     return res.json(event);
   } catch (error) {
     return res.status(500).json({ message: "Failed to delete Attendence", error });
+  }
+};
+
+/* FUNCTION TO INCREASE RATING */
+export const increaseRating: RequestHandler = async (req, res) => {
+  try {
+    if (!req.registered)
+      return res.status(401).json({ message: "No token provided" });
+
+    const user = await User.findById(req.userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+
+    if (event.rating.includes(req.userId)) {
+      return res.status(409).json({ message: "you have already rated the event before!" });
+    }
+
+    await Event.findByIdAndUpdate(req.params.id,
+      { $addToSet: { rating: req.userId } }, { new: true });
+
+      return res.status(200).json({ message: "Rating up successfully!" });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to increase rating!", error });
+  }
+};
+
+/* FUNCTION TO DECREASE RATING */
+
+export const decreaseRating: RequestHandler = async (req, res) => {
+  try {
+    if (!req.registered)
+      return res.status(403).json({ message: "No token provided" });
+
+    const user = await User.findById(req.userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+
+    if (!event.rating.includes(req.userId)) {
+      return res.status(409).json({ message: "you have already rated DOWN the event before!" });
+    }
+    await Event.findByIdAndUpdate(req.params.id,
+      { $pullAll: { rating: [req.userId] } }, { new: true });
+
+    return res.status(200).json({ message: "Rating down successfully!" });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to decrease rating!", error });
   }
 };

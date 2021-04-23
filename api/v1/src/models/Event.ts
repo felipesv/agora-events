@@ -9,15 +9,17 @@ export interface IEvent extends Document{
   tittle: string,
   description: string,
   date: Date,
-  duration: Number,
+  duration: {
+    length: number,
+    format: string
+  },
   format: string,
   onSite: boolean,
   venue: string,
   isActive: boolean,
   capacity: number,
-  rating: {users: Array<string> | Array<ObjectId>, value: number},
+  rating: Array<string>,
   attendance: Array<string>,
-  //  | Array<ObjectId>
 }
 
 const eventSchema = new Schema({
@@ -67,17 +69,12 @@ const eventSchema = new Schema({
     default: true,
   },
   capacity: {
-    type: Number
+    type: Number,
+    default: -1,
   },
-  rating: {
-    users: [
+  rating: [
       { type: Schema.Types.ObjectId, ref: 'User' }
     ],
-    value: {
-      type: Number,
-      default: 0
-    }
-  },
   attendance: [
     { type: Schema.Types.ObjectId, ref: 'User' }
   ]

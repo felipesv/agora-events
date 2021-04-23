@@ -13,7 +13,7 @@ export const isAuthor = async (eventId: string, userId: string) => {
 
 export const hasCapacity = async (event: IEvent) => {
 
-  if (typeof event.capacity === undefined)
+  if (event.capacity < 0)
     return true;
   
   if (event.capacity > event.attendance.length)

@@ -10,4 +10,5 @@ export default {
   TOKEN_KEY: process.env.TOKEN_KEY || process.env.TOKEN_KEY_TEST,
   SALT_ROUNDS: process.env.SALT_ROUNDS || process.env.SALT_ROUNDS_TEST,
   ROLES: process.env.ROLES || process.env.ROLES_TEST,
+  API_PATH_VERSION: process.env.API_PATH_VERSION,
 };
