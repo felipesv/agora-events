@@ -2,7 +2,7 @@
 
 ### Test to get all events
 GET {{api}}/events
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
+# x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
 
 ### Test to get an existing event -> GET {{api}}/events/<valid id>
 GET {{api}}/events/60809963561f151650b48094
@@ -13,20 +13,20 @@ GET {{api}}/events/nonexistingevent
 
 ### Test to create a valid event
 POST {{api}}/events/
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5NDRlMGY0NGY3MTUyODQ5ZmU2OSIsImlhdCI6MTYxOTAzOTMxMCwiZXhwIjoxNjE5MTI1NzEwfQ.0OVmzwUtdKKqtZLWOFCHYmsXX6pu-hepvoqQXDgSUcA
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTE5OTg1NSwiZXhwIjoxNjE5Mjg2MjU1fQ.IQxxd_cUngKNbMmONx8i_Ix2f1ZZpjh2fx7AnPtnsy4
 Content-Type: application/json
 
 {
-	"author": "6080944e0f44f7152849fe69",
-	"title": "cumpleaños",
-	"description": "esto es una descripcion",
+	"title": "BIOSEGURIDAD2",
+	"description": "esto es una descripcion biosegura",
 	"duration": {
 		"length": 1,
 		"format": "days"
 	},
 	"date": "2021-05-08 18:30:00Z",
 	"onSite": false,
-	"venue": "www.micumple.com/live"
+	"venue": "www.mibio.com/live",
+	"capacity": 1
 }
 
 ### Test to create an invalid event
@@ -58,14 +58,15 @@ DELETE {{api}}/events/nonexistingevent
 ### Test to update an event -> PUT {{api}}/events/<valid id>
 PUT {{api}}/events/60809963561f151650b48094
 Content-Type: application/json
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTAzODgzNSwiZXhwIjoxNjE5MTI1MjM1fQ.S0yFeYCH8kyTsTdYh6nL4Q5_Tl8loknPFt1E0aLHU64
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjczMGY0NGY3MTUyODQ5ZmU2NyIsImlhdCI6MTYxOTE5Nzc4MywiZXhwIjoxNjE5Mjg0MTgzfQ.yU5gaOYYy6eoM2aVGb3xNZjXtWoHJcd18X8FIXMpyuo
 
 {
-	"title": "Cumple editado POR ADMIN!!!",
+	"title": "Cumple!!!!!!!!",
 	"duration": {
-		"length": 2,
+		"length": 3,
 		"format": "days"
-	}
+	},
+	"capacitiy": 1
 }
 
 ### Test to update a invalid event -> PUT {{api}}/events/<invalid id>
@@ -82,8 +83,8 @@ Content-Type: application/json
 
 ### Attendance Test
 
-POST {{api}}/attendance/6080a5514556ad19c105b336
-x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5MjkzMGY0NGY3MTUyODQ5ZmU2OCIsImlhdCI6MTYxOTAzODg2NywiZXhwIjoxNjE5MTI1MjY3fQ.BZX7f1tszathU4YMghuUxTMqRBrgLvU4NxvzodoqKjI
+POST {{api}}/attendance/608307defe80e5252516fbf5
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODA5YmMwNTYxZjE1MTY1MGI0ODA5NSIsImlhdCI6MTYxOTIwMzExOCwiZXhwIjoxNjE5Mjg5NTE4fQ.FdueM8E_8Sacsq7FWv0mi_YBNGlINo0uq78GizM1zns
 
 ### DELETE ATTENDANCE
 DELETE {{api}}/attendance/6080a5514556ad19c105b336

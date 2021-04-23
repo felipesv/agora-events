@@ -1,11 +1,15 @@
 import { RequestHandler } from 'express';
 import Event from '../models/Event';
 import User from '../models/User';
-import { isAuthor } from '../helpers/helpers';
+import { isAuthor, hasCapacity } from '../helpers/helpers';
 
 /* FUNCTION TO CREATE EVENT */
 export const createEvent: RequestHandler = async (req, res) => {
   try {
+    if (!req.registered) {
+      return res.status(401).json({ message: "Unauthorized!" });
+    }
+    req.body.author = req.userId;
     const event = new Event(req.body);
     const savedEvent = await event.save();
 
@@ -42,7 +46,6 @@ export const getEvents: RequestHandler = async (req, res) => {
 /* FUNCTION TO GET AN EVENT BY ID */
 export const getEvent: RequestHandler = async (req, res) => {
   try {
-
     if (req.registered) {
 
       const user = await User.findById(req.userId);
@@ -123,13 +126,19 @@ export const insertAttendance: RequestHandler = async (req, res) => {
     const user = await User.findById(req.userId);
 
     if (!user) return res.status(404).json({ message: "User not found" });
+    
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: "Event not found" });
 
-    const event = await Event.findByIdAndUpdate(req.params.id,
-      { $addToSet: { attendance: [req.userId] } }, { new: true });
+    if (event.attendance.includes(req.userId)) {
+      return res.status(409).json({ message: "you are already an assistant" });
+    }
 
-    if (!event) return res.status(404).json({ message: "User not found" });
-    return res.json(event);
-
+    if (await hasCapacity(event)) {
+      const event = await Event.findByIdAndUpdate(req.params.id,
+        { $addToSet: { attendance: req.userId } }, { new: true });
+    }
+    return res.status(409).json({ message: "It's full! no capacity available." });
   } catch (error) {
     return res.status(500).json({ message: "Failed to insert Attendence", error });
   }

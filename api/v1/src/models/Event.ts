@@ -1,8 +1,24 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 
 // An objectId has 2 validation by default:
 // 1) Hexadecimal 2) 24 characters
 // That's why i necessary to use the mongoose-id-validator library
+
+export interface IEvent extends Document{
+  author: string | ObjectId,
+  tittle: string,
+  description: string,
+  date: Date,
+  duration: Number,
+  format: string,
+  onSite: boolean,
+  venue: string,
+  isActive: boolean,
+  capacity: number,
+  rating: {users: Array<string> | Array<ObjectId>, value: number},
+  attendance: Array<string>,
+  //  | Array<ObjectId>
+}
 
 const eventSchema = new Schema({
   author: {
@@ -70,4 +86,4 @@ const eventSchema = new Schema({
   timestamps: true
 });
 
-export default model('Event', eventSchema);
+export default model<IEvent>('Event', eventSchema);

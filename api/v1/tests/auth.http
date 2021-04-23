@@ -19,6 +19,6 @@ POST {{api}}/signin/
 Content-Type: application/json
 
 {
-	"username": "admin",
+	"username": "norman",
 	"password": "123"
 }

@@ -7,6 +7,7 @@ import config from '../config/config';
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
+      useFindAndModify: false
       /*user: config.MONGO_USER,
       pass: config.MONGO_PASSWORD*/
     };
