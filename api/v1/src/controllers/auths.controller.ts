@@ -8,7 +8,8 @@ export const signUp: RequestHandler = async (req, res) => {
     const user = new User({
       ...req.body,
       password: await encryptPassword(req.body.password),
-      roles: typeof req.body.roles === undefined || req.body.roles?.length === 0 ? ["user"] : req.body.roles
+      roles: typeof req.body.roles === undefined ||
+        req.body.roles?.length === 0 ? ["user"] : req.body.roles
     });
     const savedUser = await user.save();
     const token_key: Secret = String(config.TOKEN_KEY);
@@ -16,7 +17,7 @@ export const signUp: RequestHandler = async (req, res) => {
 
     return res.json({ token: `Bearer ${token}` });
   } catch (error) {
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Your signup failed", error });
   }
 };
 
@@ -28,6 +29,6 @@ export const signIn: RequestHandler = async (req, res) => {
 
     res.json({ token: `Bearer ${token}` });
   } catch(error) {
-    return res.status(400).json(error);
+    return res.status(401).json({ message: "Your login failed", error });
   }
 };
