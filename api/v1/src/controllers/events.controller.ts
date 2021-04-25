@@ -1,7 +1,7 @@
 import { RequestHandler, Request } from 'express';
 import Event from '../models/Event';
 import User from '../models/User';
-import { isAuthor, hasCapacity } from '../helpers/helpers';
+import { isAuthor, hasCapacity, emptyFieldsEvent } from '../helpers/helpers';
 
 /* FUNCTION TO CREATE EVENT */
 export const createEvent: RequestHandler = async (req, res) => {
@@ -104,6 +104,12 @@ export const updateEvent: RequestHandler = async (req: Request, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    if (!user.roles.includes('admin') && ('attendance' in req.body || 'rating' in req.body))
+        return res.status(401).json({ message: "Unauthorized!"});
+
+    if (emptyFieldsEvent(req))
+      return res.status(401).json({ message: "Invalid fields"});
+
     if (user.roles.includes('admin') || await isAuthor(req.params.id, req.userId)) {
       const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
       if (!event) return res.status(404).json({ message: "User not found" });
@@ -136,6 +142,7 @@ export const insertAttendance: RequestHandler = async (req, res) => {
     if (await hasCapacity(event)) {
       const event = await Event.findByIdAndUpdate(req.params.id,
         { $addToSet: { attendance: req.userId } }, { new: true });
+      return res.json({ message: "attendance registered successfully" });
     }
     return res.status(409).json({ message: "It's full! no capacity available." });
   } catch (error) {
@@ -157,7 +164,7 @@ export const deleteAttendance: RequestHandler = async (req, res) => {
       { $pullAll: { attendance: [req.userId] } }, { new: true });
 
     if (!event) return res.status(404).json({ message: "User not found" });
-    return res.json(event);
+    return res.json({message: "attendance unregistered successfully"});
   } catch (error) {
     return res.status(500).json({ message: "Failed to delete Attendence", error });
   }

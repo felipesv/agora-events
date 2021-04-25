@@ -1,0 +1,42 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD Login with an existing user with role 'user'
+POST {{api}}/signin/
+Content-Type: application/json
+
+{
+	"username": "pepito",
+	"password": "123"
+}
+
+### GOOD Login with an existing user with role 'admin'
+POST {{api}}/signin/
+Content-Type: application/json
+
+{
+	"username": "admin",
+	"password": "123"
+}
+
+
+
+
+
+### BAD Login with an existing user and invalid password
+POST {{api}}/signin/
+Content-Type: application/json
+
+{
+	"username": "admin",
+	"password": "12345678"
+}
+
+### BAD Login with an inexistent user
+POST {{api}}/signin/
+Content-Type: application/json
+
+{
+	"username": "alvaro",
+	"password": "123"
+}

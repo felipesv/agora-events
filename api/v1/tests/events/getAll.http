@@ -1,0 +1,13 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD Get all events by an registered user with role admin
+GET {{api}}/events
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NGI4OWZjMTY3NTVmOGYzMTE4NiIsImlhdCI6MTYxOTI5MzM2OCwiZXhwIjoxNjE5Mzc5NzY4fQ.9M2GOWD5YsAFGgoEL3-iDNRzzNVeQBiofTyZ4n1TzQk
+
+### GOOD Get all events by an registered user with role user
+GET {{api}}/events
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+### GOOD Get all events by an unregistered user
+GET {{api}}/events

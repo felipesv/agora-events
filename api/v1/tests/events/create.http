@@ -1,0 +1,87 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD Create event with all attributes
+POST {{api}}/events/
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "evento credo por pepito",
+	"description": "descripcion del evento",
+	"date": "2021-12-01 10:30:00Z",
+	"duration": {
+		"length": 1,
+		"format": "days"
+	},
+	"onSite": true,
+	"venue": "Direccion ####",
+	"isActive": true,
+	"capacity": 45
+}
+
+### GOOD Create event with require attributes
+POST {{api}}/events/
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "segundo evento credo por pepito",
+	"description": "descripcion del evento",
+	"date": "2021-12-01 10:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL"
+}
+
+### BAD Create event without token
+POST {{api}}/events/
+Content-Type: application/json
+
+{
+	"title": "segundo evento credo por pepito",
+	"description": "descripcion del evento",
+	"date": "2021-12-01 10:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL"
+}
+
+### BAD Create event without a require attribute
+POST {{api}}/events/
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "segundo evento credo por pepito",
+	"description": "descripcion del evento",
+	"date": "2021-12-01 10:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false
+}
+
+### BAD Create event with a invalid token
+POST {{api}}/events/
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsIanR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "segundo evento credo por pepito",
+	"description": "descripcion del evento",
+	"date": "2021-12-01 10:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL"
+}

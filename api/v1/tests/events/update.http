@@ -1,0 +1,137 @@
+@api = http://localhost:5000/api/v1
+
+### GOOD update event by user with role admin
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NGI4OWZjMTY3NTVmOGYzMTE4NiIsImlhdCI6MTYxOTI5MzM2OCwiZXhwIjoxNjE5Mzc5NzY4fQ.9M2GOWD5YsAFGgoEL3-iDNRzzNVeQBiofTyZ4n1TzQk
+
+{
+	"title": "evento credo por pepito (editado)",
+	"description": "descripcion del evento (editado)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 1,
+	"attendance": []
+}
+
+### GOOD update event by user with role user and author
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "evento credo por pepito (editado author)",
+	"description": "descripcion del evento (editado author)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 5,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 2
+}
+
+### BAD update event by user with role user and no author
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ5YmJhODIzYzQ3NmE0YTNjZDhkNCIsImlhdCI6MTYxOTMwMzM1NCwiZXhwIjoxNjE5Mzg5NzU0fQ.-291D2hG9WvFVyM4er-GuvFOv6j466F7OQLf1Lrpmes
+
+{
+	"title": "evento credo por pepito (editado no author)",
+	"description": "descripcion del evento (editado no author)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 5,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 2
+}
+
+### BAD update event by user with invalid token
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NDlhOWZjMTY3NTVmOGYzMTE4NSIsImlhdCI6MTYxOTI5MzMzOSwiZXhwIjoxNjE5Mzc5NzM5fQ.5KSy_NpZIX4zezY8Fc6Ig4i_7vTU8h3mgVm3IDJcKVc
+
+{
+	"title": "evento credo por pepito (editado invalid token)",
+	"description": "descripcion del evento (editado invalid token)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 5,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 2
+}
+
+### BAD update event by user with role 'user' (author) and forbidden field
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5acCI6IkpXVCJ9.eyJpZCI6IjYwODQ5YmJhODIzYzQ3NmE0YTNjZDhkNCIsImlhdCI6MTYxOTMwMzM1NCwiZXhwIjoxNjE5Mzg5NzU0fQ.-291D2hG9WvFVyM4er-GuvFOv6j466F7OQLf1Lrpmes
+
+{
+	"title": "evento credo por pepito (editado no token)",
+	"description": "descripcion del evento (editado no token)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 5,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 2,
+	"attendance": []
+}
+
+### BAD update event by user with role 'user' and invalid id
+PUT {{api}}/events/invalidid
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5acCI6IkpXVCJ9.eyJpZCI6IjYwODQ5YmJhODIzYzQ3NmE0YTNjZDhkNCIsImlhdCI6MTYxOTMwMzM1NCwiZXhwIjoxNjE5Mzg5NzU0fQ.-291D2hG9WvFVyM4er-GuvFOv6j466F7OQLf1Lrpmes
+
+{
+	"title": "evento credo por pepito (editado no token)",
+	"description": "descripcion del evento (editado no token)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 5,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 2
+}
+
+### BAD update evente with valid user and invalid field
+PUT {{api}}/events/60848f242eaf885b57dc2104
+Content-Type: application/json
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NGI4OWZjMTY3NTVmOGYzMTE4NiIsImlhdCI6MTYxOTI5MzM2OCwiZXhwIjoxNjE5Mzc5NzY4fQ.9M2GOWD5YsAFGgoEL3-iDNRzzNVeQBiofTyZ4n1TzQk
+
+{
+	"title": "",
+	"description": "descripcion del evento (editado)",
+	"date": "2021-12-19 12:30:00Z",
+	"duration": {
+		"length": 3,
+		"format": "hours"
+	},
+	"onSite": false,
+	"venue": "URL",
+	"isActive": true,
+	"capacity": 1,
+	"attendance": []
+}

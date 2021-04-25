@@ -1,0 +1,78 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD Create a user with rol 'user'
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "pepito",
+	"password": "123",
+	"firstName": "pepito",
+	"lastName": "perez",
+	"email": "pepito@gmail.com"
+}
+
+### GOOD Create a user with rol 'admin'
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "admin",
+	"password": "123",
+	"firstName": "admin",
+	"lastName": "admin",
+	"email": "admin@gmail.com",
+	"roles": ["admin"]
+}
+
+### GOOD Create a user with rol 'user'
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "perensejo",
+	"password": "123",
+	"firstName": "perensejo",
+	"lastName": "nuñez",
+	"email": "perensejo@gmail.com"
+}
+
+
+
+
+
+### BAD Create a user with an username existing
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "admin",
+	"password": "123",
+	"firstName": "josefina",
+	"lastName": "lopez",
+	"email": "josefina@gmail.com"
+}
+
+### BAD Create a user with an email existing
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "rigoberto",
+	"password": "123",
+	"firstName": "rigoberto",
+	"lastName": "lozano",
+	"email": "pepito@gmail.com"
+}
+
+### BAD Create a user without some params
+POST {{api}}/signup/
+Content-Type: application/json
+
+{
+	"username": "libardo",
+	"password": "123",
+	"firstName": "libardo",
+	"email": "libardo@gmail.com"
+}

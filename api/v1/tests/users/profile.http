@@ -1,0 +1,13 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD update
+GET {{api}}/user/profile
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NGI4OWZjMTY3NTVmOGYzMTE4NiIsImlhdCI6MTYxOTI5MzM2OCwiZXhwIjoxNjE5Mzc5NzY4fQ.9M2GOWD5YsAFGgoEL3-iDNRzzNVeQBiofTyZ4n1TzQk
+
+### BAD GET users without token
+GET {{api}}/user/profile
+
+### BAD GET users with invalid token
+GET {{api}}/user/profile
+x-auth-token: Bearer eyJhbGciOiJIUzIa1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ5YmJhODIzYzQ3NmE0YTNjZDhkNCIsImlhdCI6MTYxOTMwMzM1NCwiZXhwIjoxNjE5Mzg5NzU0fQ.-291D2hG9WvFVyM4er-GuvFOv6j466F7OQLf1Lrpmes
