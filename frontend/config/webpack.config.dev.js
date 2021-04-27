@@ -42,7 +42,12 @@ module.exports = {
     extensions: ['.js' , '.jsx'],
     alias: {
       '@assets': path.resolve(__dirname, '../src/assets/'),
+      '@stylesComponents': path.resolve(__dirname, '../src/assets/styles/components'),
+      '@stylesViews': path.resolve(__dirname, '../src/assets/styles/views'),
+      '@stylesContainers': path.resolve(__dirname, '../src/assets/styles/Containers'),
       '@components': path.resolve(__dirname, '../src/components/'),
+      '@views': path.resolve(__dirname, '../src/views/'),
+      '@containers': path.resolve(__dirname, '../src/containers/'),
     },
   },
   module: {
