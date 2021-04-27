@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital@1&family=IBM+Plex+Mono&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-decoration: none;
+}
+
+a, a:visited {
+  color: white;
+}
+
+a:hover {
+  font-weight: bolder;
+  text-shadow: white 0 0 10px;
+}
+
+.a--underline {
+  text-decoration: underline;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bitter', serif;
+}
+
+p {
+  font-family: 'IBM Plex Mono', monospace;
+}
