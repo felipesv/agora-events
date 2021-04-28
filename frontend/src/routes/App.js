@@ -7,16 +7,21 @@ import NotFound from '../views/NotFound';
 import Layout from '../components/Layout';
 
 const App = () => (
+  <Home />
+  /*
   <BrowserRouter>
     <Layout>
       <Switch>
         <Route exact path='/' component={Home} />
-        {/* <Route exact path='/login' component={Login} />
-        <Route exact path='/Register' component={Register} /> */}
+          {
+            // <Route exact path='/login' component={Login} />
+            // <Route exact path='/Register' component={Register} />
+          }
         <Route component={NotFound} />
       </Switch>
     </Layout>
   </BrowserRouter>
+  */
 );
 
 export default App;
