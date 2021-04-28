@@ -8,7 +8,6 @@ export const initialState = {
 }
 
 const eventReducer = (state = initialState, action) => {
-  // console.log(action);
   switch(action.type) {
     default:
       return state;
@@ -17,7 +16,8 @@ const eventReducer = (state = initialState, action) => {
       state.events = action.data;
       return state;
     case SET_LOADING_STATE:
-      return state.loading =  action.loading;
+      state.loading = action.loading;
+      return state;
   }
 }
 

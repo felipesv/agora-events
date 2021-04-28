@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {Home} from '../views/Home';
+import Home from '../views/Home';
 // import Login from '../views/Login';
 // import Register from '../views/Register';
 import NotFound from '../views/NotFound';
 import Layout from '../components/Layout';
 
 const App = () => (
-  <Home />
-  /*
   <BrowserRouter>
     <Layout>
       <Switch>
@@ -21,7 +19,6 @@ const App = () => (
       </Switch>
     </Layout>
   </BrowserRouter>
-  */
 );
 
 export default App;

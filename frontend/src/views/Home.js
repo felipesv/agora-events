@@ -11,7 +11,6 @@ export class Home extends PureComponent {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.props.fetchEvents();
   }
 
@@ -23,7 +22,7 @@ export class Home extends PureComponent {
 }
 
 Home.defaultProps = {
-  fetchEvents: () => {}
+  fetchEvents: () => {},
 }
 
 Home.propTypes = {
@@ -31,13 +30,13 @@ Home.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    events: state.events
-  }
+    events: state.event
+  };
 };
+
 const mapDispatchToProps = {
-  fetchEvents,
+  fetchEvents: fetchEvents,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
