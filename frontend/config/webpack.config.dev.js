@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new BundleAnalyzerPlugin(),
-//    new Dotenv()
+    new Dotenv()
   ],
   resolve: {
     extensions: ['.js' , '.jsx'],

@@ -1,7 +1,7 @@
 import React, { PureComponent} from 'react';
 import { connect } from 'react-redux';
 import PropTypes  from 'prop-types';
-import { fetchEvents } from "../actions/eventActionCreator";
+import { fetchEvents } from "../services/eventServices";
 import '@stylesViews/Home.scss'
 
 export class Home extends PureComponent {
@@ -16,7 +16,13 @@ export class Home extends PureComponent {
 
   render () {
     return (
-      <h1>Home</h1>
+      <h1>
+        {
+        this.props.events != undefined?
+          this.props.events[0].title: ''
+        }
+        Home
+      </h1>
     );
   } 
 }
