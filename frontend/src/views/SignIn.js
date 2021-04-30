@@ -11,22 +11,22 @@ export const SignIn = (props) => {
     username: "",
     password: ""
   });
+
   const handleInputChange = (event) => {
     setCredential({
       ...credential,
       [event.target.name]: event.target.value
     })
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     props.login(credential);
     localStorage.setItem("token", props.token)
   };
-  
+
   return (
-    
     <React.Fragment>
-      {console.log("======ENTRO RETURN PROPS TOKEN=====", props.token)}
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">First name:</label>
@@ -35,7 +35,6 @@ export const SignIn = (props) => {
         <input type="password" id="password" name="password" onChange={handleInputChange}/><br/><br/>
         <button type="submit" className="is-primary">SIGN IN</button>
       </form>
-
     </React.Fragment>
     );
 }

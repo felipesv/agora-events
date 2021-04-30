@@ -5,7 +5,7 @@ import {
 export const initialState = {
   events: [],
   loading: false,
-}
+};
 
 const eventReducer = (state = initialState, action) => {
   switch(action.type) {
@@ -16,6 +16,6 @@ const eventReducer = (state = initialState, action) => {
     case SET_LOADING_STATE:
       return { ...state, loading: action.loading };
   }
-}
+};
 
 export default eventReducer;

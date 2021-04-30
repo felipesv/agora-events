@@ -6,38 +6,32 @@ import '@stylesViews/Home.scss'
 
 
 export const Home = (props) => {
-
   const events = useSelector(state => state.events.events)
-
-  useEffect(() => {
-    // getEvents();
-    //await props.fetchEvents();
-    props.fetchEvents();
+  useEffect( () => {
+    getEvents();
   }, []);
 
-  const getEvents = () => {
-    props.fetchEvents();
+  const getEvents = async () => {
+    await props.fetchEvents();
   }
 
-  const printState = () => {
-  }
   return (
     <>
     <h1>
       Home
     </h1>
-
     </>
   );
-}
+
+};
 
 Home.defaultProps = {
   fetchEvents: () => {},
-}
+};
 
 Home.propTypes = {
   fetchEvents: PropTypes.func
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -48,7 +42,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchEvents: fetchEvents,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 // export default Home
