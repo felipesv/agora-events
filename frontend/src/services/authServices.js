@@ -5,10 +5,7 @@ export const login = (credentials) => {
   
   return (dispatch) => {
     return axios.post(`${process.env.API_URL}/signin`, credentials)
-    .then((res) => {
-      localStorage.setItem("token", res.data.token)
-      return res.data
-    })
+    .then((res) => res.data)
     .then((token) => dispatch(authLogin(token)))
     .catch((error) => {console.log(error)});
   }

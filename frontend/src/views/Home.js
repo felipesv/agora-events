@@ -1,30 +1,34 @@
-import React, { PureComponent} from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 import PropTypes  from 'prop-types';
 import { fetchEvents } from "../services/eventServices";
 import '@stylesViews/Home.scss'
 
-export class Home extends PureComponent {
-  
-  constructor (props) {
-    super(props);
+
+export const Home = (props) => {
+
+  const events = useSelector(state => state.events.events)
+
+  useEffect(() => {
+    // getEvents();
+    //await props.fetchEvents();
+    props.fetchEvents();
+  }, []);
+
+  const getEvents = () => {
+    props.fetchEvents();
   }
 
-  componentDidMount() {
-    this.props.fetchEvents();
+  const printState = () => {
   }
+  return (
+    <>
+    <h1>
+      Home
+    </h1>
 
-  render () {
-    return (
-      <h1>
-        {
-        this.props.events != undefined?
-          this.props.events[0].title: ''
-        }
-        Home
-      </h1>
-    );
-  } 
+    </>
+  );
 }
 
 Home.defaultProps = {
@@ -37,7 +41,8 @@ Home.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.event
+    events: state.events.events,
+    loadingEvents: state.events.loading
   };
 };
 

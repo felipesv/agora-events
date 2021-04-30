@@ -16,3 +16,21 @@ export const fetchEvents = () => {
       .finally(() => dispatch(setLoadingState(false)));
   };
 };
+
+/* nuevo
+export const fetchEvents = () => async dispatch => {
+  try {
+    dispatch(setLoadingState(true));
+    return await axios.get(
+      `${process.env.API_URL}/events`,
+      constructHeader()
+    )
+      .then((res) => res.data)
+      .then((data) => dispatch(getEvents(data)))
+      .catch((error) => {})
+      .finally(() => dispatch(setLoadingState(false))); 
+  } catch (error) {
+    console.log("#####CATCHHHHH", error)
+  }
+};
+*/

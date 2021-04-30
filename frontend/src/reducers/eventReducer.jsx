@@ -12,12 +12,9 @@ const eventReducer = (state = initialState, action) => {
     default:
       return state;
     case GET_EVENTS:
-      console.log("action GET_EVENT was called");
-      state.events = action.data;
-      return state;
+      return { ...state, events: action.data };
     case SET_LOADING_STATE:
-      state.loading = action.loading;
-      return state;
+      return { ...state, loading: action.loading };
   }
 }
 

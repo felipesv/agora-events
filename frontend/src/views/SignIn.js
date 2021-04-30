@@ -20,7 +20,7 @@ export const SignIn = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.login(credential);
-    // console.log("========PROPS TOKEN=======", props.token);
+    localStorage.setItem("token", props.token)
   };
   
   return (

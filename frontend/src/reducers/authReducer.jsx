@@ -9,9 +9,8 @@ const authReducer = (state = initialState, action) => {
     default:
       return state;
     case AUTH_LOGIN:
-      console.log("action AUTH_LOGIN was called");
       state.token = action.token.token;
-      return state;
+      return { ...state, token: action.token.token };
     case AUTH_REGISTER:
       return state;
   }
