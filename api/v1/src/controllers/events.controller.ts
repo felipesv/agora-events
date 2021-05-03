@@ -71,6 +71,23 @@ export const getEvent: RequestHandler = async (req, res) => {
   }
 };
 
+/* FUNCTION TO GET EVENT BY AUTHOR  */
+export const getEventAuthor: RequestHandler = async (req, res) => {
+  try {
+    if (!req.registered)
+      return res.status(403).json({ message: "No token provided" });
+
+    const user = await User.findById(req.userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const events = await Event.find({author: req.userId});
+    return res.json(events);
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to get events", error });
+  }
+};
+
 /* FUNCTION TO DELETE AN EXISTING EVENT */
 export const deleteEvent: RequestHandler = async (req, res) => {
   try {

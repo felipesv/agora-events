@@ -1,0 +1,6 @@
+@api = http://localhost:5000/api/v1
+
+
+### GOOD Get event by author
+GET {{api}}/authorevents/
+x-auth-token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODQ3NGI4OWZjMTY3NTVmOGYzMTE4NiIsImlhdCI6MTYyMDA3MzEyNSwiZXhwIjoxNjIwMTU5NTI1fQ.ZfsKuc6leu-cPPpoaVUmZo_8JaEIhxQ0U5NrmNj9w4A
