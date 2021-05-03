@@ -1,10 +1,13 @@
 import { 
-  SET_LOADING_STATE, GET_EVENTS
+  SET_LOADING_STATE, GET_EVENTS,
+  GET_EVENT_BY_ID, CREATE_EVENT,
+  DELETE_EVENT
 } from '../actions/eventActionTypes';
 
 export const initialState = {
   events: [],
   loading: false,
+  event: null
 };
 
 const eventReducer = (state = initialState, action) => {
@@ -15,6 +18,11 @@ const eventReducer = (state = initialState, action) => {
       return { ...state, events: action.data };
     case SET_LOADING_STATE:
       return { ...state, loading: action.loading };
+    case GET_EVENT_BY_ID:
+    case CREATE_EVENT:
+      return { ...state, event: action.data };
+    case DELETE_EVENT:
+      return { ...state, event: null, success: action.data }
   }
 };
 

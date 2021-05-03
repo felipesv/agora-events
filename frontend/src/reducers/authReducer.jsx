@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_REGISTER } from "../actions/authActionTypes";
+import { AUTH_LOGIN, AUTH_REGISTER, AUTH_ERROR } from "../actions/authActionTypes";
 
 export const initialState = {
   token: ""
@@ -9,10 +9,11 @@ const authReducer = (state = initialState, action) => {
     default:
       return state;
     case AUTH_LOGIN:
-      state.token = action.token.token;
-      return { ...state, token: action.token.token };
     case AUTH_REGISTER:
-      return state;
+      return { ...state, token: action.token.token, error: '' };
+    case AUTH_ERROR:
+      return { ...state, error: action.error.response.data }
+    
   }
 }
 

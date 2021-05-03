@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import PropTypes  from 'prop-types';
+
 import { fetchEvents } from "../services/eventServices";
-import '@stylesViews/Home.scss'
+import '@stylesViews/Home.scss';
+import Event from '../components/Event'
 
 
 export const Home = (props) => {
@@ -16,11 +18,9 @@ export const Home = (props) => {
   }
 
   return (
-    <>
-    <h1>
-      Home
-    </h1>
-    </>
+    <React.Fragment>
+      <Event listEvents={props.events}/>
+    </React.Fragment>
   );
 
 };

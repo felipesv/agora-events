@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes  from 'prop-types';
 import { login } from "../services/authServices";
 import '@stylesViews/SignIn.scss'
-import '../mystyles.scss';
 
 
 export const SignIn = (props) => {
+
+  useEffect( () => {
+    if (props.token) localStorage.setItem("token", props.token)    
+  }, [props.token]);
+
   const [credential, setCredential] = useState({
     username: "",
     password: ""
@@ -19,23 +23,30 @@ export const SignIn = (props) => {
     })
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    props.login(credential);
-    localStorage.setItem("token", props.token)
+    await props.login(credential);
   };
 
   return (
-    <React.Fragment>
+    <div className="container">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">First name:</label>
-        <input type="text" id="username" name="username" onChange={handleInputChange}/><br/><br/>
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" onChange={handleInputChange}/><br/><br/>
-        <button type="submit" className="is-primary">SIGN IN</button>
+        <div className="columns">
+          <div className="column">
+            <label htmlFor="username">Username:</label>
+            <input type="text" id="username" name="username" className="input" onChange={handleInputChange}/><br/><br/>
+          </div>
+          <div className="column">
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" className="input" onChange={handleInputChange}/><br/><br/>
+          </div>
+        </div>
+        <button type="submit" className="button is-danger">SIGN IN</button>
       </form>
-    </React.Fragment>
+
+      {props.error ? <p>{props.error.message}</p> : <></>}
+    </div>
     );
 }
 
@@ -49,7 +60,8 @@ SignIn.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.token
+    token: state.auth.token,
+    error: state.auth.error
   };
 };
 
