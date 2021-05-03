@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/events', [validToken], eventsCtrl.getEvents);
 router.get('/events/:id', [validToken], eventsCtrl.getEvent);
+router.get('/authorevents', [validToken], eventsCtrl.getEventAuthor);
 router.post('/events', [validToken], eventsCtrl.createEvent);
 router.delete('/events/:id', [validToken], eventsCtrl.deleteEvent);
 router.put('/events/:id', [validToken], eventsCtrl.updateEvent);
