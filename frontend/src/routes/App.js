@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../views/Home';
 import SignIn from '../views/SignIn';
 import SignUp from '../views/SignUp';
-import EventDetail from '../components/EventDetail';
+import EventDetail from '../views/EventDetail';
 import CreateEvent from '../views/CreateEvent';
+import MyEvents from '../views/MyEvents';
 import NotFound from '../views/NotFound';
 import Layout from '../components/Layout';
 
@@ -17,6 +18,7 @@ const App = () => (
         <Route exact path='/signup' component={SignUp} />
         <Route exact path='/eventdetail' component={EventDetail} />
         <Route exact path='/createevent' component={CreateEvent} />
+        <Route exact path='/myevents' component={MyEvents} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 export const constructHeader = () => {
   if (localStorage.getItem("token")) {
     return {
@@ -16,8 +18,8 @@ export const eventFormat = (newEvent) => {
       length: newEvent.duration,
       format: newEvent.format
     },
-    onSite: newEvent.onsite === "0" ? false : true,
+    onSite: newEvent.onsite,
     venue: newEvent.venue,
-    capacity: newEvent.capacity
+    capacity: parseInt(newEvent.capacity)
   }
 };

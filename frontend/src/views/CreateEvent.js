@@ -14,21 +14,30 @@ export const CreateEvent = (props) => {
   }, []);
 
   const [newEvent, setNewEvent] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    duration: "",
-    onsite: "",
-    venue: "",
-    capacity: "",
-    format: ""
+    title: "", description: "", date: "",
+    time: "", duration: "", onsite: "",
+    venue: "", capacity: -1, format: "",
+    limit: ""
   });
 
   const handleInputChange = (event) => {
+    let value = event.target.value;
+    let capacity = newEvent.capacity;
+
+    if (['radioSt', 'radioVr', 'limited', 'unlimited'].includes(event.target.id)) {
+      value = ('true' === event.target.value)
+      if (['limited'].includes(event.target.id)) {
+        capacity = 1;
+        console.log("=========NEW",newEvent)
+      } else if (['unlimited'].includes(event.target.id)) {
+        capacity = -1;
+      }
+    }
+
     setNewEvent({
       ...newEvent,
-      [event.target.name]: event.target.value
+      capacity: capacity,
+      [event.target.name]: value
     })
   };
 
@@ -57,17 +66,25 @@ export const CreateEvent = (props) => {
           <option value="hours">hours</option>
         </select><br/><br/>
         <div>
-          <input type="radio" id="virtual" name="onsite" onChange={handleInputChange} value="0"/>
-          <label htmlFor="virtual">Virtual</label>
+          <input type="radio" id="radioVr" name="onsite" onChange={handleInputChange} value={false}/>
+          <label htmlFor="radioVr">Virtual</label>
         </div><br/><br/>
         <div>
-          <input type="radio" id="novirtual" name="onsite" onChange={handleInputChange} value="1"/>
-          <label htmlFor="novirtual">On Site</label>
+          <input type="radio" id="radioSt" name="onsite" onChange={handleInputChange} value={true}/>
+          <label htmlFor="radioSt">On Site</label>
         </div><br/><br/>
         <label htmlFor="venue">Venue</label>
         <input type="text" id="venue" name="venue" onChange={handleInputChange}/><br/><br/>
+        <div>
+          <input type="radio" id='unlimited' name="limit" onChange={handleInputChange} value={false} checked={newEvent.limit ? false : true}/>
+          <label htmlFor="virtual">Unlimited</label>
+        </div><br/><br/>
+        <div>
+          <input type="radio" id='limited' name="limit" onChange={handleInputChange} value={true} checked={newEvent.limit}/>
+          <label htmlFor="novirtual">limited</label>
+        </div><br/><br/>
         <label htmlFor="capacity">Capacity</label>
-        <input type="number" id="capacity" name="capacity" onChange={handleInputChange}/><br/><br/>
+        <input type="number" id="capacity" name="capacity" min="1" value={newEvent.limit ? (newEvent.capacity < 0 ? 1 : newEvent.capacity) : ''} disabled={newEvent.limit ? false : true} onChange={handleInputChange}/><br/><br/>
         <button type="submit" className="is-primary">CREATE</button>
       </form>
     </React.Fragment>

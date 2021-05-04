@@ -11,7 +11,7 @@ export class EventDetail extends React.Component
     super(props)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.location.state)
       this.props.fetchEventById(this.props.location.state.event);
   }

@@ -1,5 +1,7 @@
 import { SET_LOADING_STATE, GET_EVENTS, GET_EVENT_BY_ID,
-  CREATE_EVENT } from './eventActionTypes';
+  CREATE_EVENT, GET_EVENTS_BY_AUTHOR, DELETE_EVENT,
+  EDIT_EVENT
+} from './eventActionTypes';
 
 export const setLoadingState = (loading) => ({ 
   type: SET_LOADING_STATE, 
@@ -18,5 +20,20 @@ export const getEventById = (data) => ({
 
 export const createEvent = (data) => ({
   type: CREATE_EVENT,
+  data: data
+});
+
+export const deleteEventById = (data) => ({
+  type: DELETE_EVENT,
+  data: data
+});
+
+export const getEventsByAuthor = (data) => ({
+  type: GET_EVENTS_BY_AUTHOR,
+  data: data
+});
+
+export const editEvent = (data) => ({
+  type: EDIT_EVENT,
   data: data
 });

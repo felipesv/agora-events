@@ -1,5 +1,7 @@
 import { setLoadingState, getEvents, getEventById,
-  createEvent, deleteEventById } from "../actions/eventActionCreator";
+  createEvent, deleteEventById, getEventsByAuthor,
+  editEvent
+} from "../actions/eventActionCreator";
 import axios from "axios";
 import { constructHeader, eventFormat } from "../utils/eventUtils";
 
@@ -27,6 +29,18 @@ export const fetchEventById = (id) => async dispatch => {
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
+export const fetchEventByAuthor = () => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.get(
+    `${process.env.API_URL}/authorevents`,
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(getEventsByAuthor(data)))
+  .catch((error) => {})
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
 export const createNewEvent = (newEvent) => async dispatch => {
   dispatch(setLoadingState(true));
   await axios.post(
@@ -44,11 +58,26 @@ export const deleteEvent = (id) => async dispatch => {
   dispatch(setLoadingState(true));
   await axios.delete(
     `${process.env.API_URL}/events/${id}`,
-    {},
     constructHeader()
   )
   .then((res) => res.data)
-  .then((data) => dispatch(deleteEventById(data)))
+  .then((data) => {
+    data.idRemove = id;
+    dispatch(deleteEventById(data))
+  })
+  .catch((error) => {})
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
+export const updateEvent = (newEventUpdated) => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.put(
+    `${process.env.API_URL}/events/${newEventUpdated.id}`,
+    eventFormat(newEventUpdated),
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(editEvent(data)))
   .catch((error) => {})
   .finally(() => dispatch(setLoadingState(false))); 
 };

@@ -8,7 +8,7 @@ export const Event = (props) => {
   const events = props.listEvents;
   const history = useHistory();
 
-  function handleDetail(id) {
+  const handleDetail = (id) => {
     history.push({
       pathname: "/eventdetail",
       state: {
