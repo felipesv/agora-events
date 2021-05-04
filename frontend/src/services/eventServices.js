@@ -1,6 +1,6 @@
 import { setLoadingState, getEvents, getEventById,
   createEvent, deleteEventById, getEventsByAuthor,
-  editEvent
+  editEvent, addAttendance, eventError, deleteAttendance, addRating, deleteRating
 } from "../actions/eventActionCreator";
 import axios from "axios";
 import { constructHeader, eventFormat } from "../utils/eventUtils";
@@ -79,5 +79,55 @@ export const updateEvent = (newEventUpdated) => async dispatch => {
   .then((res) => res.data)
   .then((data) => dispatch(editEvent(data)))
   .catch((error) => {})
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
+export const attendanceUp = (id) => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.post(
+    `${process.env.API_URL}/attendance/${id}`,
+    {},
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(addAttendance(data)))
+  .catch((error) => dispatch(eventError(error)))
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
+export const attendanceDown = (id) => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.delete(
+    `${process.env.API_URL}/attendance/${id}`,
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(deleteAttendance(data)))
+  .catch((error) => dispatch(eventError(error)))
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
+export const ratingUp = (id) => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.post(
+    `${process.env.API_URL}/rating/${id}`,
+    {},
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(addRating(data)))
+  .catch((error) => dispatch(eventError(error)))
+  .finally(() => dispatch(setLoadingState(false))); 
+};
+
+export const ratingDown = (id) => async dispatch => {
+  dispatch(setLoadingState(true));
+  await axios.delete(
+    `${process.env.API_URL}/rating/${id}`,
+    constructHeader()
+  )
+  .then((res) => res.data)
+  .then((data) => dispatch(deleteRating(data)))
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };

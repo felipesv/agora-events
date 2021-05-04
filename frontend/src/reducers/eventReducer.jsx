@@ -2,7 +2,12 @@ import {
   SET_LOADING_STATE, GET_EVENTS,
   GET_EVENT_BY_ID, CREATE_EVENT,
   DELETE_EVENT, GET_EVENTS_BY_AUTHOR,
-  EDIT_EVENT
+  EDIT_EVENT,
+  ADD_ATTENDANCE,
+  EVENT_ERROR,
+  DELETE_ATTENDANCE,
+  ADD_RATING,
+  DELETE_RATING
 } from '../actions/eventActionTypes';
 
 export const initialState = {
@@ -28,6 +33,13 @@ const eventReducer = (state = initialState, action) => {
     case DELETE_EVENT:
       const newEvents = state.events.filter((event) => event._id !== action.data.idRemove);
       return { ...state, events: newEvents, success: action.data }
+    case ADD_ATTENDANCE:
+    case DELETE_ATTENDANCE:
+    case ADD_RATING:
+    case DELETE_RATING:
+      return { ...state, events: newEvents, success: action.data }
+    case EVENT_ERROR:
+      return { ...state, error: action.error.response.data }
   }
 };
 
