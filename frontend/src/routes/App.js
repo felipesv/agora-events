@@ -8,6 +8,7 @@ import CreateEvent from '../views/CreateEvent';
 import MyEvents from '../views/MyEvents';
 import NotFound from '../views/NotFound';
 import Layout from '../components/Layout';
+import Profile from '../views/Profile';
 
 const App = () => (
   <BrowserRouter>
@@ -19,6 +20,7 @@ const App = () => (
         <Route exact path='/eventdetail' component={EventDetail} />
         <Route exact path='/createevent' component={CreateEvent} />
         <Route exact path='/myevents' component={MyEvents} />
+        <Route exact path='/profile' component={Profile} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
