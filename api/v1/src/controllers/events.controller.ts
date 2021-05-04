@@ -124,7 +124,8 @@ export const updateEvent: RequestHandler = async (req: Request, res) => {
     if (!user.roles.includes('admin') && ('attendance' in req.body || 'rating' in req.body))
         return res.status(401).json({ message: "Unauthorized!"});
 
-    if (emptyFieldsEvent(req))
+    req.body = { ...req.body, author:req.userId }
+    if (!emptyFieldsEvent(req))
       return res.status(401).json({ message: "Invalid fields"});
 
     if (user.roles.includes('admin') || await isAuthor(req.params.id, req.userId)) {
