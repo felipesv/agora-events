@@ -3,6 +3,8 @@ import Event from '../models/Event';
 import User from '../models/User';
 import { isAuthor, hasCapacity, emptyFieldsEvent } from '../helpers/helpers';
 
+const mongoose = require('mongoose')
+
 /* FUNCTION TO CREATE EVENT */
 export const createEvent: RequestHandler = async (req, res) => {
   try {
@@ -29,14 +31,42 @@ export const getEvents: RequestHandler = async (req, res) => {
       if (!user) return res.status(404).json({ message: "User not found" });
 
       if (user.roles.includes('admin')) {
-        const events = await Event.find();
+        const events = await Event.aggregate(
+          [
+            { $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+            { $unwind: '$author' },
+            { $project: { 
+              _id: '$_id', isActive: '$isActive', capacity: '$capacity', rating: '$rating',
+              attendance: '$attendance', title: '$title', description: '$description',
+              date: '$date', duration: '$duration', onSite: '$onSite', venue: '$venue',
+              createdAt: '$createdAt', updatedAt: '$updatedAt',
+              author: {
+                firstName: '$author.firstName',
+                lastName: '$author.lastName',
+                username: '$author.username'
+              }
+            }}
+          ]);
         return res.json(events);
       }
     }
 
     // This is in case the user is registered but has no admin
-    const events = await Event.find().select('-attendance');
-
+    const events = await Event.aggregate(
+      [
+        { $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+        { $unwind: '$author' },
+        { $project: { 
+          _id: '$_id', isActive: '$isActive', capacity: '$capacity', title: '$title',
+          description: '$description', date: '$date', duration: '$duration', 
+          onSite: '$onSite', venue: '$venue', createdAt: '$createdAt', updatedAt: '$updatedAt', 
+          author: {
+            firstName: '$author.firstName',
+            lastName: '$author.lastName',
+            username: '$author.username'
+          }
+        }}
+      ]);
     return res.json(events);
   } catch (error) {
     res.status(500).json({ message: "Failed to get events", error });
@@ -55,17 +85,50 @@ export const getEvent: RequestHandler = async (req, res) => {
       if (user.roles.includes('admin') ||
         await isAuthor(req.params.id, req.userId)) {
 
-        const event = await Event.findById(req.params.id);
+        const event = await Event.aggregate(
+          [
+            { $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+            { $match: { "_id": mongoose.Types.ObjectId(req.params.id)}},
+            { $unwind: '$author' },
+            { $project: { 
+              _id: '$_id', isActive: '$isActive', capacity: '$capacity', rating: '$rating',
+              attendance: '$attendance', title: '$title', description: '$description',
+              date: '$date', duration: '$duration', onSite: '$onSite', venue: '$venue',
+              createdAt: '$createdAt', updatedAt: '$updatedAt',
+              author: {
+                firstName: '$author.firstName',
+                lastName: '$author.lastName',
+                username: '$author.username'
+              }
+            }}
+          ]);
 
-        return res.json(event);
+        if (event.length === 0) return res.status(404).json({ message: "Event not found" });
+
+        return res.json(event[0]);
       }
     }
 
-    const event = await Event.findById(req.params.id).select('-attendance');
+    const event = await Event.aggregate(
+      [
+        { $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+        { $match: { "_id": mongoose.Types.ObjectId(req.params.id)}},
+        { $unwind: '$author' },
+        { $project: { 
+          _id: '$_id', isActive: '$isActive', capacity: '$capacity', title: '$title',
+          description: '$description', date: '$date', duration: '$duration', 
+          onSite: '$onSite', venue: '$venue', createdAt: '$createdAt', updatedAt: '$updatedAt', 
+          author: {
+            firstName: '$author.firstName',
+            lastName: '$author.lastName',
+            username: '$author.username'
+          }
+        }}
+      ]);
 
-    if (!event) return res.status(404).json({ message: "User not found" });
+    if (event.length === 0) return res.status(404).json({ message: "Event not found" });
 
-    return res.json(event);
+    return res.json(event[0]);
   } catch (error) {
     return res.status(500).json({ message: "Failed to get event", error });
   }
@@ -81,7 +144,24 @@ export const getEventAuthor: RequestHandler = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const events = await Event.find({author: req.userId});
+    // const events = await Event.find({author: req.userId});
+    const events = await Event.aggregate(
+      [
+        { $match: { "author": mongoose.Types.ObjectId(req.userId)}},
+        { $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+        { $unwind: '$author' },
+        { $project: { 
+          _id: '$_id', isActive: '$isActive', capacity: '$capacity', title: '$title',
+          description: '$description', date: '$date', duration: '$duration', 
+          onSite: '$onSite', venue: '$venue', createdAt: '$createdAt', updatedAt: '$updatedAt', 
+          author: {
+            firstName: '$author.firstName',
+            lastName: '$author.lastName',
+            username: '$author.username'
+          }
+        }}
+      ]);
+
     return res.json(events);
   } catch (error) {
     return res.status(500).json({ message: "Failed to get events", error });
