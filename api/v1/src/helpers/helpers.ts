@@ -24,9 +24,12 @@ export const hasCapacity = async (event: IEvent) => {
 
 export const emptyFieldsEvent = (req: Request) =>  {
   try {
+    if (parseInt(req.body.duration.length) <= 0)
+      return false;
     new Event(req.body);
     return true;
   } catch (error) {
+    console.log("entro")
     return false;
   }
 }
