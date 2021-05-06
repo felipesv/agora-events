@@ -7,7 +7,8 @@ import '@stylesComponents/EventDetail.scss';
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { BsFillPersonFill, BsLink45Deg } from "react-icons/bs";
 import { MdDateRange, MdLocationOn } from "react-icons/md";
-import { IoIosPeople, IoMdTime, IoTodaySharp } from "react-icons/io";
+import { IoIosPeople, IoMdTime } from "react-icons/io";
+import { IoTodaySharp } from "react-icons/io5";
 import { isLoggedIn } from '../utils/authUtils';
 import Swal from 'sweetalert2';
 
