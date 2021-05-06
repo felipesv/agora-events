@@ -44,8 +44,10 @@ export const getEvents: RequestHandler = async (req, res) => {
                 firstName: '$author.firstName',
                 lastName: '$author.lastName',
                 username: '$author.username'
-              }
-            }}
+              },
+              rate: { $size: '$rating' }
+            }},
+            { $sort: { rate: -1}}
           ]);
         return res.json(events);
       }
@@ -64,8 +66,10 @@ export const getEvents: RequestHandler = async (req, res) => {
             firstName: '$author.firstName',
             lastName: '$author.lastName',
             username: '$author.username'
-          }
-        }}
+          },
+          rate: { $size: '$rating' }
+        }},
+        { $sort: { rate: -1}}
       ]);
     return res.json(events);
   } catch (error) {
