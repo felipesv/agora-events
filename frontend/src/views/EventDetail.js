@@ -11,6 +11,9 @@ import { IoIosPeople, IoMdTime } from "react-icons/io";
 import { IoTodaySharp } from "react-icons/io5";
 import { isLoggedIn } from '../utils/authUtils';
 import Swal from 'sweetalert2';
+import remoteImg from '../assets/images/remote.png';
+import onsiteImg from '../assets/images/onsite.png';
+import onsiteImg_1 from '../assets/images/onsite_1.png';
 
 export class EventDetail extends React.Component 
 {
@@ -76,7 +79,13 @@ export class EventDetail extends React.Component
           <div className="container mt-6">
             <div>
               <div className="is-flex is-justify-content-space-around	px-6">
-                <img className="image" src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80" width="400"/>
+                { this.props.event.onSite
+                  ? ( 
+                      (Math.random() * 10 < 5)
+                        ? <img className="image img-size" src={onsiteImg} />
+                        : <img className="image img-size" src={onsiteImg_1} /> )
+                  : <img className="image img-size" src={remoteImg} />
+                }
                 <div className="detail-width">
                   <h1 className="title is-4 is-uppercase	has-text-centered">{this.props.event.title}</h1>
                   <div className="is-flex is-justify-content-space-between my-2">

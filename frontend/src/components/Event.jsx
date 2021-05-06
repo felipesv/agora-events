@@ -7,8 +7,12 @@ import '@stylesComponents/Event.scss';
 import { MdDateRange, MdLaptopChromebook, MdPeople, MdLocationOn } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { IoIosPeople, IoMdTime } from "react-icons/io";
+import { AiOutlineRise } from "react-icons/ai";
 import { MdTitle } from "react-icons/md";
 import Swal from 'sweetalert2';
+import remoteImg from '../assets/images/remote.png';
+import onsiteImg from '../assets/images/onsite.png';
+import onsiteImg_1 from '../assets/images/onsite_1.png';
 
 export const Event = (props) => {
 
@@ -127,15 +131,22 @@ export const Event = (props) => {
             <figure className="image is-4by3">
               { 
                 props.event.onSite 
-                ?  <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80" alt="Placeholder image" />
-                : <img src="https://i.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8"/>
+                ?  ( 
+                  (Math.random() * 10 < 5)
+                    ? <img src={onsiteImg} />
+                    : <img src={onsiteImg_1} /> )
+                : <img src={remoteImg}/>
               }
             </figure>
           </div>
           <div className={cursorPointer} onClick={ props.myEvent ? () => {} : () => handleDetail(props.event._id)}>
             <div className="media">
               <div className="media-content is-flex is-flex-direction-column is-align-content-space-between	">
-                <div className="is-flex is-justify-content-flex-end is-align-items-center	mb-2">
+                <div className="is-flex is-justify-content-space-between is-align-items-center	mb-2">
+                  <div className="is-uppercase has-text-primary is-flex is-align-items-center">
+                    <AiOutlineRise className="has-text-primary"/>
+                    {props.event.rate}
+                  </div> 
                   <div className="is-uppercase has-text-primary is-flex is-align-items-center">
                     <MdDateRange className="has-text-primary"/>
                     {`${eventDate.getFullYear()}-${eventDate.getMonth()+1}-${eventDate.getDate()}`}
