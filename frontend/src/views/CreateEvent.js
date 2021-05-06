@@ -3,14 +3,17 @@ import { connect, useSelector } from 'react-redux';
 import PropTypes  from 'prop-types';
 
 import { createNewEvent } from "../services/eventServices";
-import '@stylesViews/Home.scss';
-
+import '@stylesViews/CreateEvent.scss';
+import { MdLocationOn } from "react-icons/md";
+import { MdTitle } from "react-icons/md";
+import { isLoggedIn } from '../utils/authUtils';
 
 export const CreateEvent = (props) => {
   const events = useSelector(state => state.events.events)
 
   useEffect( () => {
-    
+    if (!isLoggedIn())
+      location.href = '/';
   }, []);
 
   const [newEvent, setNewEvent] = useState({
@@ -44,49 +47,121 @@ export const CreateEvent = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.createNewEvent(newEvent);
+    setTimeout(() => {
+      location.href = '/myevents';
+    }, 1000);
   };
 
   return (
     <React.Fragment>
-      <h1>NEW EVENT</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
-        <input type="text" id="title" name="title" onChange={handleInputChange}/><br/><br/>
-        <label htmlFor="description">Description:</label>
-        <textarea type="text" id="description" name="description" onChange={handleInputChange}></textarea><br/><br/>
-        <label htmlFor="date">Date:</label>
-        <input type="date" id="date" name="date" onChange={handleInputChange}/><br/><br/>
-        <label htmlFor="time">Hour:</label>
-        <input type="time" id="time" name="time" onChange={handleInputChange}/><br/><br/>
-        <label htmlFor="duration">Duration</label>
-        <input type="number" id="duration" name="duration" onChange={handleInputChange}/><br/><br/>
-        <select id="duration" name="format" onChange={handleInputChange}>
-          <option value="">Select format</option>
-          <option value="days">days</option>
-          <option value="hours">hours</option>
-        </select><br/><br/>
-        <div>
-          <input type="radio" id="radioVr" name="onsite" onChange={handleInputChange} value={false}/>
-          <label htmlFor="radioVr">Virtual</label>
-        </div><br/><br/>
-        <div>
-          <input type="radio" id="radioSt" name="onsite" onChange={handleInputChange} value={true}/>
-          <label htmlFor="radioSt">On Site</label>
-        </div><br/><br/>
-        <label htmlFor="venue">Venue</label>
-        <input type="text" id="venue" name="venue" onChange={handleInputChange}/><br/><br/>
-        <div>
-          <input type="radio" id='unlimited' name="limit" onChange={handleInputChange} value={false} checked={newEvent.limit ? false : true}/>
-          <label htmlFor="virtual">Unlimited</label>
-        </div><br/><br/>
-        <div>
-          <input type="radio" id='limited' name="limit" onChange={handleInputChange} value={true} checked={newEvent.limit}/>
-          <label htmlFor="novirtual">limited</label>
-        </div><br/><br/>
-        <label htmlFor="capacity">Capacity</label>
-        <input type="number" id="capacity" name="capacity" min="1" value={newEvent.limit ? (newEvent.capacity < 0 ? 1 : newEvent.capacity) : ''} disabled={newEvent.limit ? false : true} onChange={handleInputChange}/><br/><br/>
-        <button type="submit" className="is-primary">CREATE</button>
-      </form>
+      <div className="is-flex is-align-items-center is-flex-direction-column py-6">
+        <h1 className="title is-4 is-uppercase">Create a new event</h1>
+        <form onSubmit={handleSubmit} className="form-width">
+          {/* TITLE */}
+          <div className="mt-2">
+            <label htmlFor="title" className="has-text-weight-bold">Title:</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" id='title' name="title" placeholder="Title" value={newEvent.title} onChange={handleInputChange}/>
+              <span className="icon is-left">
+                <MdTitle/>
+              </span>
+            </div>
+          </div>
+          {/* DESCRIPTION */}
+          <div className="mt-2">
+            <div className="control">
+              <label htmlFor="description" className="has-text-weight-bold">Description:</label>
+              <textarea className="textarea" id='description' name="description" value={newEvent.description} onChange={handleInputChange} placeholder="Large textarea"></textarea>
+            </div>
+          </div>
+          {/* DATE */}
+          <div className="mt-2">
+            <label htmlFor="title" className="has-text-weight-bold">Date:</label>
+            <div className="control">
+              <input className="input" type="date" id='date' name="date" onChange={handleInputChange}/>
+            </div>
+          </div>
+          {/* TIME */}
+          <div className="mt-2">
+            <label htmlFor="time" className="has-text-weight-bold">Hour:</label>
+            <div className="control">
+              <input className="input" type="time" id='time' name="time" onChange={handleInputChange}/>
+            </div>
+          </div>
+          {/* DURATION */}
+          <div className="mt-2">
+            <label htmlFor="duration" className="has-text-weight-bold">Duration:</label>
+            <div className="control">
+              <input className="input" type="number" id='duration' name="duration" value={newEvent.duration} onChange={handleInputChange}/>
+            </div>
+          </div>
+          {/* FORMAT */}
+          <div className="mt-2">
+            <label className="has-text-weight-bold">Duration format:</label>
+            <div className="control">
+              <label className="radio">
+                <input type="radio" id='formatH' name="format" onChange={handleInputChange} value="hours" checked={newEvent.format === "hours" ? true : false}/>
+                &nbsp;Hours
+              </label>
+              <label className="radio">
+                <input type="radio" id='formatD' name="format" onChange={handleInputChange} value="days" checked={newEvent.format === "days" ? true : false}/>
+                &nbsp;Days
+              </label>
+            </div>
+          </div>
+          {/* ONSITE */}
+          <div className="mt-2">
+            <label className="has-text-weight-bold">Venue type:</label>
+            <div className="control">
+              <label className="radio">
+                <input type="radio" id='radioVr' name="onsite" onChange={handleInputChange} value={false} checked={newEvent.onsite ? false : true}/>
+                &nbsp;Virtual
+              </label>
+              <label className="radio">
+                <input type="radio" id='radioSt' name="onsite" onChange={handleInputChange} value={true} checked={newEvent.onsite ? true : false}/>
+                &nbsp;On Site
+              </label>
+            </div>
+          </div>
+          {/* VENUE */}
+          <div className="mt-2">
+            <label htmlFor="title" className="has-text-weight-bold">Venue:</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" id='venue' name="venue" placeholder="Venue" value={newEvent.venue} onChange={handleInputChange}/>
+              <span className="icon is-left">
+                <MdLocationOn/>
+              </span>
+            </div>
+          </div>
+          {/* LIMIT */}
+          <div className="mt-2">
+            <label className="has-text-weight-bold">Limit:</label>
+            <div className="control">
+              <label className="radio">
+                <input type="radio" id='unlimited' name="limit" onChange={handleInputChange} value={false} checked={newEvent.limit ? false : true}/>
+                &nbsp;Unlimited
+              </label>
+              <label className="radio">
+                <input type="radio" id='limited' name="limit" onChange={handleInputChange} value={true} checked={newEvent.limit}/>
+                &nbsp;Limited
+              </label>
+            </div>
+          </div>
+          {/* VENUE */}
+          <div className="mt-2">
+            <label htmlFor="capacity" className="has-text-weight-bold">Capacity:</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" id='capacity' name="capacity" placeholder="Capacity" value={newEvent.limit ? (newEvent.capacity < 0 ? 1 : newEvent.capacity) : ''} min='1' disabled={newEvent.limit ? false : true} onChange={handleInputChange}/>
+              <span className="icon is-left">
+                <MdLocationOn/>
+              </span>
+            </div>
+          </div>
+          <div className="is-flex is-justify-content-center mt-4">
+              <button type="submit" className="button is-primary mx-1">CREATE</button>
+          </div>
+        </form>
+      </div>
     </React.Fragment>
   );
 

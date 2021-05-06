@@ -4,7 +4,7 @@ import PropTypes  from 'prop-types';
 
 import { fetchEvents } from "../services/eventServices";
 import '@stylesViews/Home.scss';
-import Event from '../components/Event'
+import ListEvent from '../components/ListEvent'
 
 
 export const Home = (props) => {
@@ -18,9 +18,9 @@ export const Home = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <Event listEvents={props.events}/>
-    </React.Fragment>
+    <div className="my-6">
+      <ListEvent listEvents={props.events}/>
+    </div>
   );
 
 };

@@ -2,8 +2,13 @@ import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import PropTypes  from 'prop-types';
 import { fetchEventById, attendanceUp, attendanceDown, ratingUp, ratingDown } from "../services/eventServices";
-import  { Redirect } from 'react-router-dom'
-import '@stylesComponents/EventDetail.scss'
+import  { Redirect } from 'react-router-dom';
+import '@stylesComponents/EventDetail.scss';
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { BsFillPersonFill, BsLink45Deg } from "react-icons/bs";
+import { MdDateRange, MdLocationOn } from "react-icons/md";
+import { IoIosPeople } from "react-icons/io";
+import { isLoggedIn } from '../utils/authUtils';
 
 export class EventDetail extends React.Component 
 {
@@ -40,21 +45,64 @@ export class EventDetail extends React.Component
     if (!this.props.location.state) 
       return <Redirect to='/'/>
 
-    const event = this.props.event;
+    if (this.props.event) {
+      const eventDate = new Date(this.props.event.date);
 
-    if (event)
       return (
         <React.Fragment>
-          <h5>{event.title}</h5>
-          <p>{event.description}</p>
-          <button type="button" onClick= { () => this.attendance() }>ATTENDANCE</button>
-          <button type="button" onClick= { () => this.noAttennd() }>UNDO ATTENDANCE</button>
-          <button type="button" onClick= { () => this.rating() }>UP</button>
-          <button type="button" onClick= { () => this.noRating() }>DOWN</button>
+          <div className="container mt-6">
+            <div>
+              <div className="is-flex is-justify-content-space-around	px-6">
+                <img className="image" src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80" width="400"/>
+                <div className="">
+                  <h1 className="title is-4 is-uppercase	has-text-centered">{this.props.event.title}</h1>
+                  <div className="is-flex is-justify-content-space-between my-2">
+                    <div className="is-flex is-align-items-center">
+                      <MdDateRange className="has-text-primary"/>
+                      {`${eventDate.getFullYear()}-${eventDate.getMonth()}-${eventDate.getDate()}`}
+                    </div>
+                    <div className="is-flex is-align-items-center">
+                      <BsFillPersonFill/>{this.props.event.author.username}
+                    </div>
+                  </div>
+                  <div className="is-flex is-justify-content-space-between my-2">
+                    <div className="is-flex is-align-items-center">
+                      {
+                        this.props.event.onSite
+                        ? <React.Fragment><MdLocationOn className="has-text-primary"/>{this.props.event.venue}</React.Fragment>
+                        : <React.Fragment><BsLink45Deg className="has-text-primary"/>{this.props.event.venue}</React.Fragment>
+                      }
+                    </div>
+                    <div className="is-flex is-align-items-center">
+                      <IoIosPeople/>{this.props.event.capacity <= 0 ? 'Unlimited' : this.props.event.capacity}
+                    </div>
+                  </div>
+                  { isLoggedIn()
+                      ?
+                        <div className="is-flex is-justify-content-space-between mt-6">
+                          <div>
+                            <button type="button" onClick= { () => this.rating() } className="button is-primary mr-1"><FaArrowUp/></button>
+                            <button type="button" onClick= { () => this.noRating() } className="button is-danger"><FaArrowDown/></button>
+                          </div>
+                          <div>
+                            <button type="button" onClick= { () => this.attendance() } className="button is-primary mr-1">Attend</button>
+                            <button type="button" onClick= { () => this.noAttennd() } className="button is-danger">No Attend</button>
+                          </div>
+                        </div>
+                      : 
+                        <></>
+                  }
+                </div>
+              </div>
+              <p className="has-text-justified mt-5 mx-6">{this.props.event.description}</p>
+            </div>  
+          </div>
           { this.props.error ? <p>{this.props.error.message}</p> : <></> }
           { this.props.success ? <p>{this.props.success.message}</p> : <></> }
         </React.Fragment>
       );
+    }
+
     return (
       <h1>DETAIL</h1>
     )
