@@ -10,7 +10,7 @@ export const fetchProfile = () => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(getProfile(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(userError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 

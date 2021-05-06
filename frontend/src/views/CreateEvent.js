@@ -7,14 +7,33 @@ import '@stylesViews/CreateEvent.scss';
 import { MdLocationOn } from "react-icons/md";
 import { MdTitle } from "react-icons/md";
 import { isLoggedIn } from '../utils/authUtils';
+import Swal from 'sweetalert2';
 
 export const CreateEvent = (props) => {
   const events = useSelector(state => state.events.events)
 
   useEffect( () => {
     if (!isLoggedIn())
-      location.href = '/';
-  }, []);
+      location.href = '/myevents';
+
+    if (props.error) Swal.fire({
+      title: 'Error!',
+      text: props.error.message,
+      icon: 'error',
+      confirmButtonColor: '#57d2b2',
+    })
+
+    if (props.newEvent) 
+      Swal.fire({
+        title: 'Success!',
+        icon: 'success',
+        confirmButtonColor: '#57d2b2',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = '/myevents';
+        }
+      });
+  }, [props.error, props.newEvent]);
 
   const [newEvent, setNewEvent] = useState({
     title: "", description: "", date: "",
@@ -47,9 +66,6 @@ export const CreateEvent = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.createNewEvent(newEvent);
-    setTimeout(() => {
-      location.href = '/myevents';
-    }, 1000);
   };
 
   return (
@@ -100,11 +116,11 @@ export const CreateEvent = (props) => {
             <label className="has-text-weight-bold">Duration format:</label>
             <div className="control">
               <label className="radio">
-                <input type="radio" id='formatH' name="format" onChange={handleInputChange} value="hours" checked={newEvent.format === "hours" ? true : false}/>
+                <input type="radio" id='formatH' name="format" onChange={handleInputChange} value="hours"/>
                 &nbsp;Hours
               </label>
               <label className="radio">
-                <input type="radio" id='formatD' name="format" onChange={handleInputChange} value="days" checked={newEvent.format === "days" ? true : false}/>
+                <input type="radio" id='formatD' name="format" onChange={handleInputChange} value="days"/>
                 &nbsp;Days
               </label>
             </div>
@@ -114,11 +130,11 @@ export const CreateEvent = (props) => {
             <label className="has-text-weight-bold">Venue type:</label>
             <div className="control">
               <label className="radio">
-                <input type="radio" id='radioVr' name="onsite" onChange={handleInputChange} value={false} checked={newEvent.onsite ? false : true}/>
+                <input type="radio" id='radioVr' name="onsite" onChange={handleInputChange} value={false}/>
                 &nbsp;Virtual
               </label>
               <label className="radio">
-                <input type="radio" id='radioSt' name="onsite" onChange={handleInputChange} value={true} checked={newEvent.onsite ? true : false}/>
+                <input type="radio" id='radioSt' name="onsite" onChange={handleInputChange} value={true}/>
                 &nbsp;On Site
               </label>
             </div>
@@ -178,7 +194,9 @@ CreateEvent.propTypes = {
 const mapStateToProps = (state) => {
   return {
     event: state.events.events,
-    loadingEvent: state.events.loading
+    loadingEvent: state.events.loading,
+    error: state.events.error,
+    newEvent: state.events.event
   };
 };
 

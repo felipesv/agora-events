@@ -8,14 +8,34 @@ import { FaUserAlt, FaKey } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdTitle } from "react-icons/md";
 import { isLoggedIn } from '../utils/authUtils';
+import Swal from 'sweetalert2';
 
 
 export const SignUp = (props) => {
 
   useEffect( () => {
-    if (props.token) localStorage.setItem("token", props.token)
-    if (isLoggedIn()) location.href = '/'
-  }, [props.token]);
+    if (isLoggedIn()) location.href = '/';
+
+    if (props.token) {
+      localStorage.setItem("token", props.token);
+      Swal.fire({
+        title: 'Success!',
+        icon: 'success',
+        confirmButtonColor: '#57d2b2',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = '/';
+        }
+      })
+    }
+
+    if (props.error) Swal.fire({
+      title: 'Error!',
+      text: props.error.message,
+      icon: 'error',
+      confirmButtonColor: '#57d2b2',
+    })
+  }, [props.token,  props.error]);
 
   const [newUser, setNewUser] = useState({
     username: "",
@@ -35,9 +55,6 @@ export const SignUp = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.signup(newUser);
-    setTimeout(() => {
-      location.href = '/';
-    }, 1000);
   };
 
   return (
@@ -115,7 +132,8 @@ SignUp.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    error: state.auth.error
   };
 };
 

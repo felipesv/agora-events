@@ -29,7 +29,7 @@ const eventReducer = (state = initialState, action) => {
     case GET_EVENT_BY_ID:
     case CREATE_EVENT:
     case EDIT_EVENT:
-      return { ...state, event: action.data };
+      return { ...state, event: action.data, success: true, error: "" };
     case DELETE_EVENT:
       const newEvents = state.events.filter((event) => event._id !== action.data.idRemove);
       return { ...state, events: newEvents, success: action.data }
@@ -39,7 +39,7 @@ const eventReducer = (state = initialState, action) => {
     case DELETE_RATING:
       return { ...state, events: newEvents, success: action.data }
     case EVENT_ERROR:
-      return { ...state, error: action.error.response.data }
+      return { ...state, error: action.error.response.data, success: "" }
   }
 };
 

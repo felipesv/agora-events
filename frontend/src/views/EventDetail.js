@@ -7,8 +7,9 @@ import '@stylesComponents/EventDetail.scss';
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { BsFillPersonFill, BsLink45Deg } from "react-icons/bs";
 import { MdDateRange, MdLocationOn } from "react-icons/md";
-import { IoIosPeople } from "react-icons/io";
+import { IoIosPeople, IoMdTime, IoTodaySharp } from "react-icons/io";
 import { isLoggedIn } from '../utils/authUtils';
+import Swal from 'sweetalert2';
 
 export class EventDetail extends React.Component 
 {
@@ -23,6 +24,27 @@ export class EventDetail extends React.Component
   componentDidMount() {
     if (this.props.location.state)
       this.props.fetchEventById(this.props.location.state.event);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.success !== prevProps.success) {
+      if (typeof this.props.success !== 'boolean' && this.props.success !== "")
+        Swal.fire({
+          title: 'Success!',
+          text: this.props.success.message,
+          icon: 'success',
+          confirmButtonColor: '#57d2b2',
+        })
+    }
+
+    if (this.props.error !== prevProps.error)
+      if (typeof this.props.error !== 'boolean' && this.props.error !== "")
+        Swal.fire({
+          title: 'Hey!',
+          text: this.props.error.message,
+          icon: 'info',
+          confirmButtonColor: '#57d2b2',
+        })
   }
 
   attendance() { 
@@ -54,12 +76,12 @@ export class EventDetail extends React.Component
             <div>
               <div className="is-flex is-justify-content-space-around	px-6">
                 <img className="image" src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80" width="400"/>
-                <div className="">
+                <div className="detail-width">
                   <h1 className="title is-4 is-uppercase	has-text-centered">{this.props.event.title}</h1>
                   <div className="is-flex is-justify-content-space-between my-2">
                     <div className="is-flex is-align-items-center">
                       <MdDateRange className="has-text-primary"/>
-                      {`${eventDate.getFullYear()}-${eventDate.getMonth()}-${eventDate.getDate()}`}
+                      {`${eventDate.getFullYear()}-${eventDate.getMonth() + 1}-${eventDate.getDate()}`}
                     </div>
                     <div className="is-flex is-align-items-center">
                       <BsFillPersonFill/>{this.props.event.author.username}
@@ -75,6 +97,18 @@ export class EventDetail extends React.Component
                     </div>
                     <div className="is-flex is-align-items-center">
                       <IoIosPeople/>{this.props.event.capacity <= 0 ? 'Unlimited' : this.props.event.capacity}
+                    </div>
+                  </div>
+                  <div className="is-flex is-justify-content-space-between my-2">
+                    <div className="is-flex is-align-items-center">
+                      {
+                        this.props.event.duration.format === 'hours'
+                        ? <React.Fragment><IoMdTime className="has-text-primary"/>{this.props.event.duration.length}{this.props.event.duration.format}</React.Fragment>
+                        : <React.Fragment><IoTodaySharp className="has-text-primary"/>{this.props.event.venue}</React.Fragment>
+                      }
+                    </div>
+                    <div className="is-flex is-align-items-center">
+                      
                     </div>
                   </div>
                   { isLoggedIn()
@@ -94,7 +128,7 @@ export class EventDetail extends React.Component
                   }
                 </div>
               </div>
-              <p className="has-text-justified mt-5 mx-6">{this.props.event.description}</p>
+              <p className="has-text-justified mt-5 mx-6 mb-6">{this.props.event.description}</p>
             </div>  
           </div>
           { this.props.error ? <p>{this.props.error.message}</p> : <></> }

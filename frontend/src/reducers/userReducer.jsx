@@ -13,8 +13,9 @@ const userReducer = (state = initialState, action) => {
     default:
       return state;
     case GET_PROFILE:
-    case EDIT_USER:
       return { ...state, user: action.data };
+    case EDIT_USER:
+      return { ...state, user: action.data, success: true };
     case USER_ERROR:
       return { ...state, error: action.error.response.data };
   }

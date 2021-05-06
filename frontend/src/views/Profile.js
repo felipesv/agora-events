@@ -7,6 +7,7 @@ import { FaUserAlt, FaKey } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdTitle } from "react-icons/md";
 import { isLoggedIn } from '../utils/authUtils';
+import Swal from 'sweetalert2';
 
 export class Profile extends React.Component 
 {
@@ -30,6 +31,28 @@ export class Profile extends React.Component
 
   componentDidMount() {
     this.props.fetchProfile();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.error !== this.props.error) {
+      Swal.fire({
+        title: 'Error!',
+        text: props.error.message,
+        icon: 'error',
+        confirmButtonColor: '#57d2b2',
+      })
+    }
+    if (prevProps.success !== this.props.success) {
+      Swal.fire({
+        title: 'Success!',
+        icon: 'success',
+        confirmButtonColor: '#57d2b2',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = '/profile';
+        }
+      });
+    }
   }
 
   handleOpenModal(profile) {
@@ -137,7 +160,7 @@ export class Profile extends React.Component
                     </div>
                     <div className="is-flex is-justify-content-center mt-4">
                         <button type="submit" className="button is-primary mx-1">UPDATE</button>
-                        <button type="submit" className="button is-danger mx-1" onClick={() => this.handleCloseModal()}>CANCEL</button>
+                        <button type="button" className="button is-danger mx-1" onClick={() => this.handleCloseModal()}>CANCEL</button>
                     </div>
                   </form>
                 </div>
@@ -163,7 +186,8 @@ Profile.propTypes = {
 const mapStateToProps = (state) => {
   return {
     profile: state.user.user,
-    error: state.user.error
+    error: state.user.error,
+    success: state.user.success
   };
 };
 

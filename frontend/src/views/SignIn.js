@@ -5,14 +5,26 @@ import { login } from "../services/authServices";
 import '@stylesViews/SignIn.scss';
 import { FaUserAlt, FaKey } from "react-icons/fa";
 import { isLoggedIn } from '../utils/authUtils';
+import Swal from 'sweetalert2';
 
 
 export const SignIn = (props) => {
 
   useEffect( () => {
-    if (props.token) localStorage.setItem("token", props.token)    
-    if (isLoggedIn()) location.href = '/'
-  }, [props.token]);
+    if (isLoggedIn()) location.href = '/';
+
+    if (props.token) {
+      localStorage.setItem("token", props.token);
+      location.href = '/';
+    }
+
+    if (props.error) Swal.fire({
+      title: 'Error!',
+      text: props.error.message,
+      icon: 'error',
+      confirmButtonColor: '#57d2b2',
+    })
+  }, [props.token, props.error]);
 
   const [credential, setCredential] = useState({
     username: "",
@@ -29,9 +41,6 @@ export const SignIn = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await props.login(credential);
-    setTimeout(() => {
-      location.href = '/';
-    }, 1000);
   };
 
   return (

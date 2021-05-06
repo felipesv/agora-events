@@ -13,7 +13,7 @@ export const fetchEvents = () => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(getEvents(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
@@ -25,7 +25,7 @@ export const fetchEventById = (id) => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(getEventById(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
@@ -37,7 +37,7 @@ export const fetchEventByAuthor = () => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(getEventsByAuthor(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
@@ -50,7 +50,7 @@ export const createNewEvent = (newEvent) => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(createEvent(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
@@ -65,7 +65,7 @@ export const deleteEvent = (id) => async dispatch => {
     data.idRemove = id;
     dispatch(deleteEventById(data))
   })
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 
@@ -78,7 +78,7 @@ export const updateEvent = (newEventUpdated) => async dispatch => {
   )
   .then((res) => res.data)
   .then((data) => dispatch(editEvent(data)))
-  .catch((error) => {})
+  .catch((error) => dispatch(eventError(error)))
   .finally(() => dispatch(setLoadingState(false))); 
 };
 

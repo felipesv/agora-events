@@ -6,14 +6,32 @@ import { deleteEvent, updateEvent } from "../services/eventServices";
 import '@stylesComponents/Event.scss';
 import { MdDateRange, MdLaptopChromebook, MdPeople, MdLocationOn } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
-import { IoIosPeople } from "react-icons/io";
+import { IoIosPeople, IoMdTime } from "react-icons/io";
 import { MdTitle } from "react-icons/md";
+import Swal from 'sweetalert2';
 
 export const Event = (props) => {
 
   useEffect( () => {
-    
-  }, []);
+    if (props.error) Swal.fire({
+      title: 'Error!',
+      text: props.error.message,
+      icon: 'error',
+      confirmButtonColor: '#57d2b2',
+    })
+
+    if (props.success) {
+      Swal.fire({
+        title: 'Success!',
+        icon: 'success',
+        confirmButtonColor: '#57d2b2',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = '/myevents'
+        }
+      });
+    }
+  }, [props.error, props.success]);
 
   const [newEvent, setNewEvent] = useState({
     isActive: [],
@@ -43,7 +61,8 @@ export const Event = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.updateEvent(newEvent)
+    props.updateEvent(newEvent);
+
   }
 
   const handleDelete = (id) => {
@@ -53,7 +72,7 @@ export const Event = (props) => {
   const handleOpenModal = (event) => {
     const eventDate = new Date(event.date);
     const days = eventDate.getDate() <= 9 ? `0${eventDate.getDate()}` : eventDate.getDate();
-    const month = eventDate.getMonth() <= 9 ? `0${eventDate.getMonth()}`: eventDate.getMonth();
+    const month = eventDate.getMonth() + 1 <= 9 ? `0${eventDate.getMonth() + 1}`: eventDate.getMonth() + 1;
     const dateE = `${eventDate.getFullYear()}-${month}-${days}`;
     const hours = eventDate.getHours() <= 9 ? `0${eventDate.getHours()}`: eventDate.getHours();
     const minutes = eventDate.getMinutes() <= 9 ? `0${eventDate.getMinutes()}`: eventDate.getMinutes();
@@ -119,7 +138,7 @@ export const Event = (props) => {
                 <div className="is-flex is-justify-content-flex-end is-align-items-center	mb-2">
                   <div className="is-uppercase has-text-primary is-flex is-align-items-center">
                     <MdDateRange className="has-text-primary"/>
-                    {`${eventDate.getFullYear()}-${eventDate.getMonth()}-${eventDate.getDate()}`}
+                    {`${eventDate.getFullYear()}-${eventDate.getMonth()+1}-${eventDate.getDate()}`}
                   </div>                  
                 </div>
                 <div className="title-size is-flex is-justify-content-center is-align-items-center">
@@ -137,6 +156,15 @@ export const Event = (props) => {
                       : <div className="is-flex is-justify-content-space-between is-align-items-center"><MdLaptopChromebook />&nbsp;Remote</div>
                   }
                 </div>
+                {
+                  props.myEvent
+                    ?
+                      <div className="is-flex is-align-items-center	mb-2">
+                        <React.Fragment><IoMdTime className="has-text-primary"/>{props.event.duration.length}{props.event.duration.format}</React.Fragment>
+                      </div>
+                    :
+                        <></>
+                }
                 {
                   props.myEvent
                     ?
@@ -263,7 +291,7 @@ export const Event = (props) => {
                   </div>
                   <div className="is-flex is-justify-content-center mt-4">
                       <button type="submit" className="button is-primary mx-1">UPDATE</button>
-                      <button type="submit" className="button is-danger mx-1" onClick={() => handleCloseModal()}>CANCEL</button>
+                      <button type="button" className="button is-danger mx-1" onClick={() => handleCloseModal()}>CANCEL</button>
                   </div>
                 </form>
               </div>
@@ -296,7 +324,8 @@ const mapStateToProps = (state) => {
   return {
     events: state.events.events,
     loadingEvent: state.events.loading,
-    success: state.events.success
+    success: state.events.success,
+    error: state.events.error
   };
 };
 
